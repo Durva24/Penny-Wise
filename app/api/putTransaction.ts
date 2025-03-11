@@ -1,51 +1,63 @@
-// api/transactionApi.ts
-
-// Function to add a transaction to Google Sheets via Apps Script
-export async function addTransaction(transactionData: {
+// services/transactionApi.ts
+interface TransactionData {
   name: string;
-  type: string;
+  type: string; // "Income" or "Expense"
   amount: number;
-  transactionType: string;
+  transactionType: string; // "Cash", "Card", etc.
   category: string;
   note: string;
   date: string;
-}) {
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbyJ6KzWs1QdL86o0gflTFKHZvGqpeYNh9cfjbRyV9A6vf2AL-Cx8lOFrFONursaOPHSiQ/exec?action=addTransaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(transactionData),
-    });
+}
 
+/**
+ * Adds a new transaction to the spreadsheet using the Google Apps Script
+ * @param data Transaction data to be added
+ * @returns Promise with the response from the server
+ */
+export const addTransaction = async (data: TransactionData): Promise<any> => {
+  try {
+    // Base URL for the Google Apps Script
+    const baseUrl = "https://script.google.com/macros/s/AKfycbyNGVUZ0QojssudgYD2JtDLvaqYNnJ1buqzQ07RRL_AzVtYfh9_z2lpogwdlXwk6UD68w/exec";
+    
+    // Create URL with query parameters
+    const url = new URL(baseUrl);
+    
+    // Add all parameters to the URL
+    url.searchParams.append("name", data.name);
+    url.searchParams.append("type", data.type);
+    url.searchParams.append("amount", data.amount.toString());
+    url.searchParams.append("transactionType", data.transactionType);
+    url.searchParams.append("category", data.category);
+    url.searchParams.append("note", data.note);
+    url.searchParams.append("date", data.date);
+    
+    // Make GET request to the URL with parameters
+    const response = await fetch(url.toString());
+    
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const data = await response.json();
-    return { success: true, data };
+    
+    // Check content type to determine how to process the response
+    const contentType = response.headers.get("content-type");
+    
+    if (contentType && contentType.includes("application/json")) {
+      // If response is JSON, parse it
+      return await response.json();
+    } else {
+      // If not JSON (likely plain text), return as text but in a structured format
+      const textResponse = await response.text();
+      return { 
+        success: true, 
+        message: textResponse,
+        data: data
+      };
+    }
   } catch (error) {
     console.error("Error adding transaction:", error);
-    return { success: false, error: error instanceof Error ? error.message : String(error) };
+    throw error;
   }
-}
+};
 
-// Function to fetch all transactions
-export async function getTransactions() {
-  try {
-    const response = await fetch("YOUR_WEB_APP_URL?action=getTransactions", {
-      method: "GET",
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return { success: true, data };
-  } catch (error) {
-    console.error("Error fetching transactions:", error);
-    return { success: false, error: error instanceof Error ? error.message : String(error) };
-  }
-}
+// Export types for use in other components
+export type { TransactionData };

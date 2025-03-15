@@ -1,42 +1,106 @@
-import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Transaction } from "@/app/api/getTransaction";
+"use client";
 
-interface SpendingChartProps {
-  transactions: Transaction[];
-}
+import React, { useState, useEffect } from 'react';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, Sector } from 'recharts';
+import { useTransactions, Transaction } from '@/app/api/getTransaction';
 
-const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF8A65', '#64B5F6', '#81C784', '#BA68C8'];
+// Chart configuration
+const COLORS = [
+  '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', 
+  '#EC4899', '#14B8A6', '#F97316', '#6366F1', '#06B6D4'
+];
 
-const formatCurrency = (value: number): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2
-  }).format(value);
-};
+// Chart type selection options
+type ChartView = 'category' | 'transactionType';
 
-const SpendingChart: React.FC<SpendingChartProps> = ({ transactions }) => {
+const SpendingChart: React.FC = () => {
+  const { transactions, isLoading, error } = useTransactions();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [chartView, setChartView] = useState<ChartView>('category');
+  
+  // Format currency in INR
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(value);
+  };
 
-  // Process data for chart
-  const categoryData = transactions.reduce((acc, transaction) => {
-    if (transaction.Type === 'Debit') {
-      acc[transaction.Category] = (acc[transaction.Category] || 0) + Number(transaction.Amount);
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  // Process transactions data based on selected view
+  const processChartData = () => {
+    if (!transactions.length) return [];
+    
+    const groupByField = chartView === 'category' ? 'Category' : 'Transaction Type';
+    
+    const aggregatedData = transactions.reduce((acc, transaction) => {
+      if (transaction?.Type === 'Debit') {
+        const key = transaction[groupByField] || 'Uncategorized';
+        const amount = typeof transaction.Amount === 'string' 
+          ? parseFloat(transaction.Amount) 
+          : Number(transaction.Amount);
+        
+        if (!isNaN(amount)) {
+          acc[key] = (acc[key] || 0) + amount;
+        }
+      }
+      return acc;
+    }, {} as Record<string, number>);
 
-  // Sort categories by amount (highest first)
-  const chartData = Object.entries(categoryData)
-    .map(([name, value]) => ({
-      name,
-      value
-    }))
-    .sort((a, b) => b.value - a.value);
+    // Convert to array and sort by value (highest first)
+    return Object.entries(aggregatedData)
+      .map(([name, value]) => ({ name, value }))
+      .sort((a, b) => b.value - a.value);
+  };
 
-  // Calculate total expenses
+  const chartData = processChartData();
   const totalExpenses = chartData.reduce((sum, item) => sum + item.value, 0);
+
+  // Render active shape with additional details when hovering
+  const renderActiveShape = (props: any) => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? 'start' : 'end';
+
+    return (
+      <g>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333" className="text-xs font-medium">
+          {payload.name}
+        </text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#666" className="text-xs">
+          {`${formatCurrency(value)} (${(percent * 100).toFixed(1)}%)`}
+        </text>
+      </g>
+    );
+  };
 
   // Custom tooltip component
   const CustomTooltip = ({ active, payload }: any) => {
@@ -45,8 +109,8 @@ const SpendingChart: React.FC<SpendingChartProps> = ({ transactions }) => {
       const percentage = ((data.value / totalExpenses) * 100).toFixed(1);
       
       return (
-        <div className="bg-white p-3 shadow-md rounded-md border border-gray-200">
-          <p className="font-medium text-gray-800">{data.name}</p>
+        <div className="bg-white p-3 shadow-lg rounded-md border border-gray-200">
+          <p className="font-semibold text-gray-800">{data.name}</p>
           <p className="text-gray-600">{formatCurrency(data.value)}</p>
           <p className="text-gray-500">{percentage}% of total</p>
         </div>
@@ -63,33 +127,108 @@ const SpendingChart: React.FC<SpendingChartProps> = ({ transactions }) => {
     setActiveIndex(null);
   };
 
+  // Custom legend component
   const renderLegend = (props: any) => {
     const { payload } = props;
     
     return (
-      <ul className="flex flex-wrap justify-center gap-4 mt-4">
+      <ul className="flex flex-wrap justify-center gap-4 mt-6">
         {payload.map((entry: any, index: number) => (
           <li 
             key={`legend-${index}`} 
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => setActiveIndex(index === activeIndex ? null : index)}
           >
             <div 
               className="w-3 h-3 rounded-full" 
               style={{ backgroundColor: entry.color }}
             />
-            <span className="text-sm text-gray-700">{entry.value}</span>
+            <span className={`text-sm ${activeIndex === index ? 'font-medium' : ''}`}>
+              {entry.value}
+            </span>
           </li>
         ))}
       </ul>
     );
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="bg-white p-8 rounded-lg shadow-md text-center">
+        <div className="flex flex-col items-center justify-center h-64">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-gray-600">Loading spending data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">Spending Analysis</h2>
+        <div className="bg-red-50 p-4 rounded-md border border-red-200">
+          <p className="text-red-600">Error loading data: {error}</p>
+          <p className="text-gray-600 mt-2">Please try again later or contact support if the issue persists.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (chartData.length === 0) {
+    return (
+      <div className="bg-white p-8 rounded-lg shadow-md text-center">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">Spending Analysis</h2>
+        <div className="flex flex-col items-center justify-center h-64">
+          <svg className="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <p className="mt-4 text-gray-500">No expense data available</p>
+          <p className="text-gray-400 text-sm mt-2">Try adding some transactions to see your spending breakdown.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Spending by Category</h2>
-      <p className="text-gray-500 mb-4 text-center">Total: {formatCurrency(totalExpenses)}</p>
-      
-      <div className="h-64">
+    <div className="bg-white p-8 rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold text-gray-800">Spending Analysis</h2>
+        <div className="inline-flex rounded-md shadow-sm">
+          <button
+            type="button"
+            onClick={() => setChartView('category')}
+            className={`px-4 py-2 text-sm font-medium rounded-l-md border ${
+              chartView === 'category'
+                ? 'bg-blue-50 text-blue-700 border-blue-300'
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            By Category
+          </button>
+          <button
+            type="button"
+            onClick={() => setChartView('transactionType')}
+            className={`px-4 py-2 text-sm font-medium rounded-r-md border-t border-r border-b ${
+              chartView === 'transactionType'
+                ? 'bg-blue-50 text-blue-700 border-blue-300'
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            By Transaction Type
+          </button>
+        </div>
+      </div>
+
+      <div className="text-center mb-6">
+        <p className="text-gray-400 text-sm uppercase tracking-wider">Total Expenses</p>
+        <p className="text-3xl font-bold text-gray-800">{formatCurrency(totalExpenses)}</p>
+      </div>
+
+      <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -98,45 +237,18 @@ const SpendingChart: React.FC<SpendingChartProps> = ({ transactions }) => {
               cy="50%"
               innerRadius={60}
               outerRadius={80}
-              paddingAngle={5}
+              paddingAngle={4}
               dataKey="value"
+              activeIndex={activeIndex}
+              activeShape={renderActiveShape}
               onMouseEnter={handlePieEnter}
               onMouseLeave={handlePieLeave}
-              activeIndex={activeIndex !== null ? activeIndex : undefined}
-              activeShape={(props) => {
-                const RADIAN = Math.PI / 180;
-                const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
-                const sin = Math.sin(-RADIAN * midAngle);
-                const cos = Math.cos(-RADIAN * midAngle);
-                const mx = cx + (outerRadius + 30) * cos;
-                const my = cy + (outerRadius + 30) * sin;
-                const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-                const ey = my;
-                const textAnchor = cos >= 0 ? 'start' : 'end';
-                
-                return (
-                  <g>
-                    <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} className="text-sm font-medium">
-                      {payload.name}
-                    </text>
-                    <text x={cx} y={cy + 20} dy={8} textAnchor="middle" fill="#999" className="text-xs">
-                      {`${(percent * 100).toFixed(1)}%`}
-                    </text>
-                    <path d={`M${cx},${cy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-                    <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-                    <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333" className="text-xs">
-                      {`${formatCurrency(value)}`}
-                    </text>
-                  </g>
-                );
-              }}
             >
               {chartData.map((entry, index) => (
                 <Cell 
                   key={`cell-${index}`} 
                   fill={COLORS[index % COLORS.length]} 
-                  strokeWidth={activeIndex === index ? 2 : 1}
-                  stroke="#fff"
+                  stroke="none"
                 />
               ))}
             </Pie>
@@ -146,33 +258,65 @@ const SpendingChart: React.FC<SpendingChartProps> = ({ transactions }) => {
         </ResponsiveContainer>
       </div>
       
-      {/* Category breakdown table */}
-      <div className="mt-6 overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {chartData.map((item, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="px-4 py-2">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                    {item.name}
-                  </div>
+      {/* Breakdown table */}
+      <div className="mt-8 border-t pt-6">
+        <h3 className="text-lg font-medium text-gray-800 mb-4">Detailed Breakdown</h3>
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {chartView === 'category' ? 'Category' : 'Transaction Type'}
+                </th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Percentage
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {chartData.map((item, index) => (
+                <tr 
+                  key={index} 
+                  className={`hover:bg-gray-50 transition-colors ${activeIndex === index ? 'bg-blue-50' : ''}`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div 
+                        className="w-3 h-3 rounded-full mr-3 flex-shrink-0" 
+                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                      ></div>
+                      <span className="font-medium text-gray-800">{item.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right font-medium text-gray-800">
+                    {formatCurrency(item.value)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-gray-500">
+                    {((item.value / totalExpenses) * 100).toFixed(1)}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot className="bg-gray-50">
+              <tr>
+                <th scope="row" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Total
+                </th>
+                <td className="px-6 py-3 text-right font-medium text-gray-800">
+                  {formatCurrency(totalExpenses)}
                 </td>
-                <td className="px-4 py-2 text-right font-medium">{formatCurrency(item.value)}</td>
-                <td className="px-4 py-2 text-right text-gray-500">
-                  {((item.value / totalExpenses) * 100).toFixed(1)}%
+                <td className="px-6 py-3 text-right text-gray-500">
+                  100%
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </div>
   );

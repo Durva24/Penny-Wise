@@ -46,6 +46,43 @@ const getTransactionIcon = (category: string) => {
         </svg>
       </div>
     ),
+    'Entertainment': (
+      <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500">
+          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+          <line x1="7" y1="2" x2="7" y2="22"></line>
+          <line x1="17" y1="2" x2="17" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="2" y1="7" x2="7" y2="7"></line>
+          <line x1="2" y1="17" x2="7" y2="17"></line>
+          <line x1="17" y1="17" x2="22" y2="17"></line>
+          <line x1="17" y1="7" x2="22" y2="7"></line>
+        </svg>
+      </div>
+    ),
+    'Healthcare': (
+      <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>
+      </div>
+    ),
+    'Salary': (
+      <div className="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-teal-500">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      </div>
+    ),
+    'Investment': (
+      <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+          <polyline points="16 7 22 7 22 13"></polyline>
+        </svg>
+      </div>
+    ),
     'default': (
       <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
@@ -62,7 +99,7 @@ const getTransactionIcon = (category: string) => {
 // Skeleton loader component for transactions
 const TransactionSkeleton = () => (
   <div className="animate-pulse space-y-3">
-    {[1, 2, 3].map((i) => (
+    {[1, 2, 3, 4, 5, 6, 7].map((i) => (
       <div key={i} className="flex items-center justify-between py-3">
         <div className="flex items-center">
           <div className="h-8 w-8 rounded-full bg-gray-200"></div>
@@ -117,12 +154,21 @@ const EmptyState = () => (
 
 export default function TransactionHistory() {
   const { transactions, isLoading, error, refetch } = useTransactions();
-  const [filter, setFilter] = useState<'all' | 'Credit' | 'Debit'>('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | 'Credit' | 'Debit'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
-  // Filter transactions based on current filter
-  const filteredTransactions = transactions.filter(transaction => 
-    filter === 'all' || transaction.Type === filter
-  );
+  // Available categories
+  const categories = ['all', 'Food', 'Transport', 'Shopping', 'Entertainment', 'Healthcare', 'Salary', 'Investment'];
+  
+  // Filter transactions based on current filters
+  const filteredTransactions = transactions.filter(transaction => {
+    const typeMatch = typeFilter === 'all' || transaction.Type === typeFilter;
+    const categoryMatch = categoryFilter === 'all' || transaction.Category === categoryFilter;
+    return typeMatch && categoryMatch;
+  });
+
+  // Limit to 7 transactions
+  const displayTransactions = filteredTransactions.slice(0, 7);
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
@@ -131,22 +177,22 @@ export default function TransactionHistory() {
         <button className="text-sm text-gray-600 hover:text-black">See All</button>
       </div>
       
-      {/* Filters */}
+      {/* Type Filters */}
       <div className="mb-4 flex space-x-2 overflow-x-auto">
         <button 
-          onClick={() => setFilter('all')}
+          onClick={() => setTypeFilter('all')}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
-            filter === 'all' 
+            typeFilter === 'all' 
               ? 'bg-black text-white' 
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
-          All Transactions
+          All Types
         </button>
         <button 
-          onClick={() => setFilter('Credit')}
+          onClick={() => setTypeFilter('Credit')}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
-            filter === 'Credit' 
+            typeFilter === 'Credit' 
               ? 'bg-black text-white' 
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
@@ -154,9 +200,9 @@ export default function TransactionHistory() {
           Income
         </button>
         <button 
-          onClick={() => setFilter('Debit')}
+          onClick={() => setTypeFilter('Debit')}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
-            filter === 'Debit' 
+            typeFilter === 'Debit' 
               ? 'bg-black text-white' 
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
@@ -165,32 +211,60 @@ export default function TransactionHistory() {
         </button>
       </div>
       
+      {/* Category Filters */}
+      <div className="mb-4 flex space-x-2 overflow-x-auto">
+        {categories.map((category) => (
+          <button 
+            key={category}
+            onClick={() => setCategoryFilter(category)}
+            className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
+              categoryFilter === category 
+                ? 'bg-black text-white' 
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {category === 'all' ? 'All Categories' : category}
+          </button>
+        ))}
+      </div>
+      
       {/* Transaction List with loading, error and empty states */}
       {isLoading ? (
         <TransactionSkeleton />
       ) : error ? (
         <ErrorDisplay message={error} retry={refetch} />
-      ) : filteredTransactions.length === 0 ? (
+      ) : displayTransactions.length === 0 ? (
         <EmptyState />
       ) : (
-        <div className="space-y-1 divide-y divide-gray-100">
-          {filteredTransactions.map((transaction) => (
-            <div key={transaction['Sr. No.']} className="flex items-center justify-between py-3">
-              <div className="flex items-center">
-                {getTransactionIcon(transaction.Category)}
-                <div className="ml-3">
+        <>
+          <div className="space-y-1 divide-y divide-gray-100">
+            {displayTransactions.map((transaction) => (
+              <div key={transaction['Sr. No.']} className="flex items-center justify-between py-3">
+                <div className="flex items-center">
+                  {getTransactionIcon(transaction.Category)}
+                  <div className="ml-3">
                   <p className="text-sm font-medium text-gray-900">{transaction.Name}</p>
-                  <p className="text-xs text-gray-500">{transaction.Category} • {transaction['Transaction Type']}</p>
+                    <p className="text-xs text-gray-500">{transaction.Category} • {transaction['Transaction Type']}</p>
+                  </div>
+                </div>
+                <div className={`text-sm font-medium ${
+                  transaction.Type === 'Credit' ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {transaction.Type === 'Credit' ? '+' : '-'}{formatCurrency(transaction.Amount)}
                 </div>
               </div>
-              <div className={`text-sm font-medium ${
-                transaction.Type === 'Credit' ? 'text-green-600' : 'text-red-600'
-              }`}>
-                {transaction.Type === 'Credit' ? '+' : '-'}{formatCurrency(transaction.Amount)}
-              </div>
+            ))}
+          </div>
+          
+          {/* Show count of more transactions if there are more than 7 */}
+          {filteredTransactions.length > 7 && (
+            <div className="mt-4 pt-3 border-t border-gray-100 text-center">
+              <button className="text-sm font-medium text-blue-600 hover:text-blue-800">
+                Show {filteredTransactions.length - 7} more transactions
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -206,6 +206,226 @@ const getTransactionIcon = (category)=>{
             lineNumber: 40,
             columnNumber: 7
         }, this),
+        'Entertainment': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "16",
+                height: "16",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                className: "text-purple-500",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
+                        x: "2",
+                        y: "2",
+                        width: "20",
+                        height: "20",
+                        rx: "2.18",
+                        ry: "2.18"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 52,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "7",
+                        y1: "2",
+                        x2: "7",
+                        y2: "22"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 53,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "17",
+                        y1: "2",
+                        x2: "17",
+                        y2: "22"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 54,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "2",
+                        y1: "12",
+                        x2: "22",
+                        y2: "12"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 55,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "2",
+                        y1: "7",
+                        x2: "7",
+                        y2: "7"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 56,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "2",
+                        y1: "17",
+                        x2: "7",
+                        y2: "17"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 57,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "17",
+                        y1: "17",
+                        x2: "22",
+                        y2: "17"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 58,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                        x1: "17",
+                        y1: "7",
+                        x2: "22",
+                        y2: "7"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 59,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/components/TransactionHistory.tsx",
+                lineNumber: 51,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/app/components/TransactionHistory.tsx",
+            lineNumber: 50,
+            columnNumber: 7
+        }, this),
+        'Healthcare': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "h-8 w-8 rounded-full bg-red-100 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "16",
+                height: "16",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                className: "text-red-500",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                    d: "M22 12h-4l-3 9L9 3l-3 9H2"
+                }, void 0, false, {
+                    fileName: "[project]/app/components/TransactionHistory.tsx",
+                    lineNumber: 66,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/components/TransactionHistory.tsx",
+                lineNumber: 65,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/app/components/TransactionHistory.tsx",
+            lineNumber: 64,
+            columnNumber: 7
+        }, this),
+        'Salary': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "16",
+                height: "16",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                className: "text-teal-500",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
+                        x: "2",
+                        y: "7",
+                        width: "20",
+                        height: "14",
+                        rx: "2",
+                        ry: "2"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 73,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                        d: "M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 74,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/components/TransactionHistory.tsx",
+                lineNumber: 72,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/app/components/TransactionHistory.tsx",
+            lineNumber: 71,
+            columnNumber: 7
+        }, this),
+        'Investment': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "16",
+                height: "16",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+                className: "text-amber-500",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("polyline", {
+                        points: "22 7 13.5 15.5 8.5 10.5 2 17"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 81,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("polyline", {
+                        points: "16 7 22 7 22 13"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 82,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/components/TransactionHistory.tsx",
+                lineNumber: 80,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/app/components/TransactionHistory.tsx",
+            lineNumber: 79,
+            columnNumber: 7
+        }, this),
         'default': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -228,7 +448,7 @@ const getTransactionIcon = (category)=>{
                         rx: "2"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 52,
+                        lineNumber: 89,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -238,18 +458,18 @@ const getTransactionIcon = (category)=>{
                         y2: "10"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 53,
+                        lineNumber: 90,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 51,
+                lineNumber: 88,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/TransactionHistory.tsx",
-            lineNumber: 50,
+            lineNumber: 87,
             columnNumber: 7
         }, this)
     };
@@ -261,7 +481,11 @@ const TransactionSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module_
         children: [
             1,
             2,
-            3
+            3,
+            4,
+            5,
+            6,
+            7
         ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between py-3",
                 children: [
@@ -272,7 +496,7 @@ const TransactionSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module_
                                 className: "h-8 w-8 rounded-full bg-gray-200"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                                lineNumber: 68,
+                                lineNumber: 105,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -282,44 +506,44 @@ const TransactionSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module_
                                         className: "h-3 w-24 bg-gray-200 rounded"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 107,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "h-2 w-16 bg-gray-200 rounded mt-2"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                                        lineNumber: 71,
+                                        lineNumber: 108,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                                lineNumber: 69,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 67,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-3 w-16 bg-gray-200 rounded"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 74,
+                        lineNumber: 111,
                         columnNumber: 9
                     }, this)
                 ]
             }, i, true, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 66,
+                lineNumber: 103,
                 columnNumber: 7
             }, this))
     }, void 0, false, {
         fileName: "[project]/app/components/TransactionHistory.tsx",
-        lineNumber: 64,
+        lineNumber: 101,
         columnNumber: 3
     }, this);
 _c = TransactionSkeleton;
@@ -347,7 +571,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             r: "10"
                         }, void 0, false, {
                             fileName: "[project]/app/components/TransactionHistory.tsx",
-                            lineNumber: 85,
+                            lineNumber: 122,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -357,7 +581,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "12"
                         }, void 0, false, {
                             fileName: "[project]/app/components/TransactionHistory.tsx",
-                            lineNumber: 86,
+                            lineNumber: 123,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -367,18 +591,18 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "16"
                         }, void 0, false, {
                             fileName: "[project]/app/components/TransactionHistory.tsx",
-                            lineNumber: 87,
+                            lineNumber: 124,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/TransactionHistory.tsx",
-                    lineNumber: 84,
+                    lineNumber: 121,
                     columnNumber: 7
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 83,
+                lineNumber: 120,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -386,7 +610,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: "Failed to load transactions"
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 90,
+                lineNumber: 127,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -394,7 +618,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: message
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 91,
+                lineNumber: 128,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -403,13 +627,13 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: "Try Again"
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 92,
+                lineNumber: 129,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/TransactionHistory.tsx",
-        lineNumber: 82,
+        lineNumber: 119,
         columnNumber: 3
     }, this);
 _c1 = ErrorDisplay;
@@ -439,7 +663,7 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                             rx: "2"
                         }, void 0, false, {
                             fileName: "[project]/app/components/TransactionHistory.tsx",
-                            lineNumber: 106,
+                            lineNumber: 143,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -449,18 +673,18 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                             y2: "10"
                         }, void 0, false, {
                             fileName: "[project]/app/components/TransactionHistory.tsx",
-                            lineNumber: 107,
+                            lineNumber: 144,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/TransactionHistory.tsx",
-                    lineNumber: 105,
+                    lineNumber: 142,
                     columnNumber: 7
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 104,
+                lineNumber: 141,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -468,7 +692,7 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                 children: "No transactions yet"
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 110,
+                lineNumber: 147,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -476,7 +700,7 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                 children: "Transactions will appear here once you start using your accounts."
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 111,
+                lineNumber: 148,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -484,22 +708,40 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                 children: "Add Transaction"
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 112,
+                lineNumber: 149,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/TransactionHistory.tsx",
-        lineNumber: 103,
+        lineNumber: 140,
         columnNumber: 3
     }, this);
 _c2 = EmptyState;
 function TransactionHistory() {
     _s();
     const { transactions, isLoading, error, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTransactions"])();
-    const [filter, setFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('all');
-    // Filter transactions based on current filter
-    const filteredTransactions = transactions.filter((transaction)=>filter === 'all' || transaction.Type === filter);
+    const [typeFilter, setTypeFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('all');
+    const [categoryFilter, setCategoryFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('all');
+    // Available categories
+    const categories = [
+        'all',
+        'Food',
+        'Transport',
+        'Shopping',
+        'Entertainment',
+        'Healthcare',
+        'Salary',
+        'Investment'
+    ];
+    // Filter transactions based on current filters
+    const filteredTransactions = transactions.filter((transaction)=>{
+        const typeMatch = typeFilter === 'all' || transaction.Type === typeFilter;
+        const categoryMatch = categoryFilter === 'all' || transaction.Category === categoryFilter;
+        return typeMatch && categoryMatch;
+    });
+    // Limit to 7 transactions
+    const displayTransactions = filteredTransactions.slice(0, 7);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
         children: [
@@ -511,7 +753,7 @@ function TransactionHistory() {
                         children: "Recent Transactions"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 130,
+                        lineNumber: 176,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -519,140 +761,179 @@ function TransactionHistory() {
                         children: "See All"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 131,
+                        lineNumber: 177,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 129,
+                lineNumber: 175,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "mb-4 flex space-x-2 overflow-x-auto",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setFilter('all'),
-                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${filter === 'all' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
-                        children: "All Transactions"
+                        onClick: ()=>setTypeFilter('all'),
+                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${typeFilter === 'all' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
+                        children: "All Types"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 136,
+                        lineNumber: 182,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setFilter('Credit'),
-                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${filter === 'Credit' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
+                        onClick: ()=>setTypeFilter('Credit'),
+                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${typeFilter === 'Credit' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Income"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 146,
+                        lineNumber: 192,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setFilter('Debit'),
-                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${filter === 'Debit' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
+                        onClick: ()=>setTypeFilter('Debit'),
+                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${typeFilter === 'Debit' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Expenses"
                     }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 156,
+                        lineNumber: 202,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 135,
+                lineNumber: 181,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-4 flex space-x-2 overflow-x-auto",
+                children: categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setCategoryFilter(category),
+                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${categoryFilter === category ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
+                        children: category === 'all' ? 'All Categories' : category
+                    }, category, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 217,
+                        columnNumber: 11
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/app/components/TransactionHistory.tsx",
+                lineNumber: 215,
                 columnNumber: 7
             }, this),
             isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TransactionSkeleton, {}, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 170,
+                lineNumber: 233,
                 columnNumber: 9
             }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ErrorDisplay, {
                 message: error,
                 retry: refetch
             }, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 172,
+                lineNumber: 235,
                 columnNumber: 9
-            }, this) : filteredTransactions.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EmptyState, {}, void 0, false, {
+            }, this) : displayTransactions.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EmptyState, {}, void 0, false, {
                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 174,
+                lineNumber: 237,
                 columnNumber: 9
-            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "space-y-1 divide-y divide-gray-100",
-                children: filteredTransactions.map((transaction)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center justify-between py-3",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center",
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "space-y-1 divide-y divide-gray-100",
+                        children: displayTransactions.map((transaction)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between py-3",
                                 children: [
-                                    getTransactionIcon(transaction.Category),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "ml-3",
+                                        className: "flex items-center",
                                         children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm font-medium text-gray-900",
-                                                children: transaction.Name
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/components/TransactionHistory.tsx",
-                                                lineNumber: 182,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-xs text-gray-500",
+                                            getTransactionIcon(transaction.Category),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "ml-3",
                                                 children: [
-                                                    transaction.Category,
-                                                    " • ",
-                                                    transaction['Transaction Type']
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-sm font-medium text-gray-900",
+                                                        children: transaction.Name
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                                                        lineNumber: 246,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-xs text-gray-500",
+                                                        children: [
+                                                            transaction.Category,
+                                                            " • ",
+                                                            transaction['Transaction Type']
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                                                        lineNumber: 247,
+                                                        columnNumber: 21
+                                                    }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                                                lineNumber: 183,
+                                                lineNumber: 245,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                                        lineNumber: 181,
+                                        lineNumber: 243,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: `text-sm font-medium ${transaction.Type === 'Credit' ? 'text-green-600' : 'text-red-600'}`,
+                                        children: [
+                                            transaction.Type === 'Credit' ? '+' : '-',
+                                            formatCurrency(transaction.Amount)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                                        lineNumber: 250,
                                         columnNumber: 17
                                     }, this)
                                 ]
-                            }, void 0, true, {
+                            }, transaction['Sr. No.'], true, {
                                 fileName: "[project]/app/components/TransactionHistory.tsx",
-                                lineNumber: 179,
+                                lineNumber: 242,
                                 columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `text-sm font-medium ${transaction.Type === 'Credit' ? 'text-green-600' : 'text-red-600'}`,
-                                children: [
-                                    transaction.Type === 'Credit' ? '+' : '-',
-                                    formatCurrency(transaction.Amount)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/components/TransactionHistory.tsx",
-                                lineNumber: 186,
-                                columnNumber: 15
-                            }, this)
-                        ]
-                    }, transaction['Sr. No.'], true, {
+                            }, this))
+                    }, void 0, false, {
                         fileName: "[project]/app/components/TransactionHistory.tsx",
-                        lineNumber: 178,
+                        lineNumber: 240,
+                        columnNumber: 11
+                    }, this),
+                    filteredTransactions.length > 7 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt-4 pt-3 border-t border-gray-100 text-center",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            className: "text-sm font-medium text-blue-600 hover:text-blue-800",
+                            children: [
+                                "Show ",
+                                filteredTransactions.length - 7,
+                                " more transactions"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/components/TransactionHistory.tsx",
+                            lineNumber: 262,
+                            columnNumber: 15
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/TransactionHistory.tsx",
+                        lineNumber: 261,
                         columnNumber: 13
-                    }, this))
-            }, void 0, false, {
-                fileName: "[project]/app/components/TransactionHistory.tsx",
-                lineNumber: 176,
-                columnNumber: 9
-            }, this)
+                    }, this)
+                ]
+            }, void 0, true)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/TransactionHistory.tsx",
-        lineNumber: 128,
+        lineNumber: 174,
         columnNumber: 5
     }, this);
 }
-_s(TransactionHistory, "zbpLgA+aXW/IUm2Dn/W3tYP22i0=", false, function() {
+_s(TransactionHistory, "KBW47i1P76ka5D+6gHPgCRM7s8E=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTransactions"]
     ];

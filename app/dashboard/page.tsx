@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 "use client";
 
 import { useState, useEffect, Suspense, lazy } from "react";
@@ -7,8 +6,10 @@ import { useTransactions } from "@/app/api/getTransaction";
 // Import components
 import ActionButtons from "@/app/components/ActionButtons";
 import AiSuggestions from "@/app/components/AiSuggestions";
+import SpendingChart from "@/app/components/SpendingChart";
+import BalanceGraph from "@/app/components/BalanceChart";
 
-// Lazy load components for better performance
+// Lazy load components for better performance 
 const AccountsStats = lazy(() => import("@/app/components/AccountsStats"));
 const TransactionHistory = lazy(() => import("@/app/components/TransactionHistory"));
 
@@ -128,7 +129,6 @@ const ComponentLoader = () => (
 );
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("overview");
   const { transactions, isLoading: isLoadingTransactions } = useTransactions();
 
   return (
@@ -158,31 +158,20 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="mx-auto max-w-6xl px-4 py-6">
-        {/* Tabs */}
-        <div className="mb-6 border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8 overflow-x-auto">
-            {["overview", "accounts", "transactions", "budgets", "insights"].map((tab) => (
-              <button
-                key={tab}
-                className={`py-4 px-1 text-sm font-medium border-b-2 whitespace-nowrap ${
-                  activeTab === tab
-                    ? "border-black text-black"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </nav>
-        </div>
-
         {/* Dashboard Content */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {/* Left Column */}
           <div className="space-y-6 md:col-span-2">
             <Suspense fallback={<ComponentLoader />}>
+              <BalanceGraph />
+            </Suspense>
+            
+            <Suspense fallback={<ComponentLoader />}>
               <AccountsStats />
+            </Suspense>
+            
+            <Suspense fallback={<ComponentLoader />}>
+              <SpendingChart />
             </Suspense>
             
             <Suspense fallback={<ComponentLoader />}>

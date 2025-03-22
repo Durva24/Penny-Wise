@@ -149,7 +149,7 @@ export default function Dashboard() {
               )}
             </button>
             <div className="h-8 w-8 rounded-full bg-gray-800 text-white flex items-center justify-center">
-              <span className="text-sm font-medium">JD</span>
+              <span className="text-sm font-medium">DD</span>
             </div>
           </div>
         </div>

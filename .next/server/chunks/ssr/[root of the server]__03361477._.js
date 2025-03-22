@@ -27,7 +27,7 @@ const useTransactions = ()=>{
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbyJ6KzWs1QdL86o0gflTFKHZvGqpeYNh9cfjbRyV9A6vf2AL-Cx8lOFrFONursaOPHSiQ/exec?action=getTransactions');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec?action=getTransactions');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -35,10 +35,99 @@ const useTransactions = ()=>{
             if (data.status === 'success') {
                 setTransactions(data.data);
             } else {
-                throw new Error(data.error || 'Failed to fetch transactions');
+                throw new Error(data.message || 'Failed to fetch transactions');
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        } finally{
+            setIsLoading(false);
+        }
+    };
+    // Add a new transaction
+    const addTransaction = async (transaction)=>{
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec?action=addTransaction', {
+                method: 'POST',
+                body: JSON.stringify(transaction),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === 'success') {
+                await fetchTransactions(); // Refresh the list
+                return data.data;
+            } else {
+                throw new Error(data.message || 'Failed to add transaction');
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            throw err;
+        } finally{
+            setIsLoading(false);
+        }
+    };
+    // Update an existing transaction
+    const updateTransaction = async (transaction)=>{
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec?action=updateTransaction', {
+                method: 'POST',
+                body: JSON.stringify(transaction),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === 'success') {
+                await fetchTransactions(); // Refresh the list
+                return data.data;
+            } else {
+                throw new Error(data.message || 'Failed to update transaction');
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            throw err;
+        } finally{
+            setIsLoading(false);
+        }
+    };
+    // Delete a transaction
+    const deleteTransaction = async (id)=>{
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec?action=deleteTransaction', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.status === 'success') {
+                await fetchTransactions(); // Refresh the list
+                return true;
+            } else {
+                throw new Error(data.message || 'Failed to delete transaction');
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            throw err;
         } finally{
             setIsLoading(false);
         }
@@ -50,7 +139,10 @@ const useTransactions = ()=>{
         transactions,
         isLoading,
         error,
-        refetch: fetchTransactions
+        refetch: fetchTransactions,
+        addTransaction,
+        updateTransaction,
+        deleteTransaction
     };
 };
 }}),
@@ -59,26 +151,38 @@ const useTransactions = ()=>{
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// services/transactionApi.ts
 __turbopack_context__.s({
-    "addTransaction": (()=>addTransaction)
+    "addTransaction": (()=>addTransaction),
+    "deleteTransaction": (()=>deleteTransaction),
+    "getTransactions": (()=>getTransactions),
+    "updateTransaction": (()=>updateTransaction)
 });
 const addTransaction = async (data)=>{
     try {
         // Base URL for the Google Apps Script
-        const baseUrl = "https://script.google.com/macros/s/AKfycbyNGVUZ0QojssudgYD2JtDLvaqYNnJ1buqzQ07RRL_AzVtYfh9_z2lpogwdlXwk6UD68w/exec";
+        const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
         // Create URL with query parameters
         const url = new URL(baseUrl);
-        // Add all parameters to the URL
-        url.searchParams.append("name", data.name);
-        url.searchParams.append("type", data.type);
-        url.searchParams.append("amount", data.amount.toString());
-        url.searchParams.append("transactionType", data.transactionType);
-        url.searchParams.append("category", data.category);
-        url.searchParams.append("note", data.note);
-        url.searchParams.append("date", data.date);
-        // Make GET request to the URL with parameters
-        const response = await fetch(url.toString());
+        url.searchParams.append("action", "addTransaction");
+        // Create payload for POST request
+        const payload = {
+            name: data.name,
+            type: data.type,
+            amount: data.amount,
+            transactionType: data.transactionType,
+            category: data.category || "",
+            note: data.note || "",
+            date: data.date || new Date().toISOString().split('T')[0]
+        };
+        // Make POST request with JSON payload
+        const response = await fetch(url.toString(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+            redirect: 'follow'
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -98,6 +202,67 @@ const addTransaction = async (data)=>{
         }
     } catch (error) {
         console.error("Error adding transaction:", error);
+        throw error;
+    }
+};
+const getTransactions = async ()=>{
+    try {
+        const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+        const url = new URL(baseUrl);
+        url.searchParams.append("action", "getTransactions");
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error getting transactions:", error);
+        throw error;
+    }
+};
+const updateTransaction = async (data)=>{
+    try {
+        const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+        const url = new URL(baseUrl);
+        url.searchParams.append("action", "updateTransaction");
+        const response = await fetch(url.toString(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            redirect: 'follow'
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error updating transaction:", error);
+        throw error;
+    }
+};
+const deleteTransaction = async (id)=>{
+    try {
+        const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+        const url = new URL(baseUrl);
+        url.searchParams.append("action", "deleteTransaction");
+        const response = await fetch(url.toString(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id
+            }),
+            redirect: 'follow'
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error deleting transaction:", error);
         throw error;
     }
 };
@@ -2016,19 +2181,25 @@ const __TURBOPACK__default__export__ = SpendingChart;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// components/dashboard/AccountBalanceChart.tsx
+// components/dashboard/TransactionDashboard.tsx
 __turbopack_context__.s({
-    "default": (()=>AccountBalanceChart)
+    "default": (()=>TransactionDashboard)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/api/getTransaction.ts [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/Line.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/chart/LineChart.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/ResponsiveContainer.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/Line.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$BarChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/chart/BarChart.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/Bar.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/XAxis.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/YAxis.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/CartesianGrid.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/Tooltip.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/ResponsiveContainer.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Legend$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/Legend.js [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -2048,20 +2219,20 @@ const ChartSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$p
                 className: "h-4 w-24 bg-gray-200 rounded mb-4"
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 20,
+                lineNumber: 32,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "h-64 w-full bg-gray-200 rounded"
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 21,
+                lineNumber: 33,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/BalanceChart.tsx",
-        lineNumber: 19,
+        lineNumber: 31,
         columnNumber: 3
     }, this);
 // Error component
@@ -2088,7 +2259,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             r: "10"
                         }, void 0, false, {
                             fileName: "[project]/app/components/BalanceChart.tsx",
-                            lineNumber: 30,
+                            lineNumber: 42,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -2098,7 +2269,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "12"
                         }, void 0, false, {
                             fileName: "[project]/app/components/BalanceChart.tsx",
-                            lineNumber: 31,
+                            lineNumber: 43,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -2108,26 +2279,26 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "16"
                         }, void 0, false, {
                             fileName: "[project]/app/components/BalanceChart.tsx",
-                            lineNumber: 32,
+                            lineNumber: 44,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/BalanceChart.tsx",
-                    lineNumber: 29,
+                    lineNumber: 41,
                     columnNumber: 7
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 28,
+                lineNumber: 40,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
                 className: "text-base font-medium text-gray-900",
-                children: "Failed to load balance data"
+                children: "Failed to load transaction data"
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 35,
+                lineNumber: 47,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2135,7 +2306,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: message
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 36,
+                lineNumber: 48,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2144,24 +2315,134 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: "Try Again"
             }, void 0, false, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 37,
+                lineNumber: 49,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/BalanceChart.tsx",
-        lineNumber: 27,
+        lineNumber: 39,
         columnNumber: 3
     }, this);
-function AccountBalanceChart() {
+// Empty state component
+const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "py-6 flex flex-col items-center justify-center text-center",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-3 h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    strokeWidth: "2",
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    className: "text-gray-400",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
+                            x: "2",
+                            y: "5",
+                            width: "20",
+                            height: "14",
+                            rx: "2"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 63,
+                            columnNumber: 9
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                            x1: "2",
+                            y1: "10",
+                            x2: "22",
+                            y2: "10"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 64,
+                            columnNumber: 9
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/components/BalanceChart.tsx",
+                    lineNumber: 62,
+                    columnNumber: 7
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/components/BalanceChart.tsx",
+                lineNumber: 61,
+                columnNumber: 5
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                className: "text-base font-medium text-gray-900",
+                children: "No transaction data available"
+            }, void 0, false, {
+                fileName: "[project]/app/components/BalanceChart.tsx",
+                lineNumber: 67,
+                columnNumber: 5
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "mt-1 text-sm text-gray-500",
+                children: "Your transactions will appear here once you add them."
+            }, void 0, false, {
+                fileName: "[project]/app/components/BalanceChart.tsx",
+                lineNumber: 68,
+                columnNumber: 5
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/app/components/BalanceChart.tsx",
+        lineNumber: 60,
+        columnNumber: 3
+    }, this);
+function TransactionDashboard() {
     const { transactions, isLoading, error, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useTransactions"])();
-    // Calculate balance history based on transactions
-    const calculateBalanceHistory = ()=>{
-        if (!transactions.length) return [];
-        // Sort transactions by Sr. No. to maintain chronological order
+    const [activeView, setActiveView] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('all');
+    // Process the transaction data
+    const processedData = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        if (!transactions.length) return {
+            balanceHistory: [],
+            monthlySummary: [],
+            weeklySummary: []
+        };
+        // Helper to parse dates from string
+        const parseDate = (dateStr)=>{
+            if (!dateStr) return new Date(); // Default to current date if none provided
+            // Try different date formats
+            const dateFormats = [
+                /(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/,
+                /(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/,
+                /(\d{1,2})[-\/](\d{1,2})[-\/](\d{2})/
+            ];
+            for (const format of dateFormats){
+                const match = dateStr.match(format);
+                if (match) {
+                    // Adjust based on format
+                    if (format === dateFormats[0]) {
+                        return new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+                    } else if (format === dateFormats[1]) {
+                        return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+                    } else {
+                        // For YY format, assume 20XX for years < 50, 19XX for years >= 50
+                        const year = Number(match[3]);
+                        const fullYear = year < 50 ? 2000 + year : 1900 + year;
+                        return new Date(fullYear, Number(match[2]) - 1, Number(match[1]));
+                    }
+                }
+            }
+            // Try as direct Date parsing
+            const date = new Date(dateStr);
+            return isNaN(date.getTime()) ? new Date() : date;
+        };
+        // Sort transactions by date
         const sortedTransactions = [
             ...transactions
-        ].sort((a, b)=>a['Sr. No.'] - b['Sr. No.']);
+        ].sort((a, b)=>{
+            const dateA = parseDate(a.Date);
+            const dateB = parseDate(b.Date);
+            return dateA.getTime() - dateB.getTime();
+        });
         // Calculate running balance
         let balance = 0;
         const balanceHistory = sortedTransactions.map((transaction, index)=>{
@@ -2172,214 +2453,572 @@ function AccountBalanceChart() {
             }
             return {
                 id: index,
+                date: transaction.Date,
+                name: transaction.Name,
+                amount: transaction.Amount,
+                type: transaction.Type,
                 balance: balance
             };
         });
-        return balanceHistory;
-    };
-    const balanceHistory = calculateBalanceHistory();
-    // Custom tooltip component
+        // Group transactions by month
+        const monthlyData = {};
+        sortedTransactions.forEach((transaction)=>{
+            const date = parseDate(transaction.Date);
+            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            const monthName = date.toLocaleString('default', {
+                month: 'short',
+                year: '2-digit'
+            });
+            if (!monthlyData[monthKey]) {
+                monthlyData[monthKey] = {
+                    date: monthName,
+                    balance: 0,
+                    income: 0,
+                    expense: 0
+                };
+            }
+            if (transaction.Type === 'Credit') {
+                monthlyData[monthKey].income += transaction.Amount;
+                monthlyData[monthKey].balance += transaction.Amount;
+            } else {
+                monthlyData[monthKey].expense += transaction.Amount;
+                monthlyData[monthKey].balance -= transaction.Amount;
+            }
+        });
+        const monthlySummary = Object.values(monthlyData);
+        // Group transactions by week
+        const weeklyData = {};
+        sortedTransactions.forEach((transaction)=>{
+            const date = parseDate(transaction.Date);
+            // Get the week number (approximate)
+            const startDate = new Date(date.getFullYear(), 0, 1);
+            const days = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+            const weekNumber = Math.ceil(days / 7);
+            const weekKey = `${date.getFullYear()}-W${String(weekNumber).padStart(2, '0')}`;
+            const weekLabel = `W${weekNumber}, ${date.toLocaleString('default', {
+                month: 'short'
+            })}`;
+            if (!weeklyData[weekKey]) {
+                weeklyData[weekKey] = {
+                    date: weekLabel,
+                    balance: 0,
+                    income: 0,
+                    expense: 0
+                };
+            }
+            if (transaction.Type === 'Credit') {
+                weeklyData[weekKey].income += transaction.Amount;
+                weeklyData[weekKey].balance += transaction.Amount;
+            } else {
+                weeklyData[weekKey].expense += transaction.Amount;
+                weeklyData[weekKey].balance -= transaction.Amount;
+            }
+        });
+        const weeklySummary = Object.values(weeklyData);
+        return {
+            balanceHistory,
+            monthlySummary,
+            weeklySummary
+        };
+    }, [
+        transactions
+    ]);
+    // Custom tooltip for charts
     const CustomTooltip = ({ active, payload })=>{
         if (active && payload && payload.length) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "bg-white p-2 border border-gray-200 shadow-sm rounded-lg text-sm",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "font-medium text-gray-900",
-                    children: formatCurrency(payload[0].value)
-                }, void 0, false, {
-                    fileName: "[project]/app/components/BalanceChart.tsx",
-                    lineNumber: 81,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
+                className: "bg-white p-3 border border-gray-200 shadow-sm rounded-lg text-sm",
+                children: [
+                    payload[0].payload.date && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "font-medium text-gray-700 mb-1",
+                        children: payload[0].payload.date
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 209,
+                        columnNumber: 39
+                    }, this),
+                    payload.map((entry, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            style: {
+                                color: entry.color
+                            },
+                            className: "flex items-center justify-between gap-4",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    children: [
+                                        entry.name,
+                                        ":"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/components/BalanceChart.tsx",
+                                    lineNumber: 213,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-medium",
+                                    children: formatCurrency(entry.value)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/components/BalanceChart.tsx",
+                                    lineNumber: 214,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, `tooltip-${index}`, true, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 212,
+                            columnNumber: 13
+                        }, this))
+                ]
+            }, void 0, true, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 80,
+                lineNumber: 208,
                 columnNumber: 9
             }, this);
         }
         return null;
     };
+    // Custom legend for bar charts
+    const renderColorfulLegendText = (value)=>{
+        const color = value === 'Income' ? '#22c55e' : value === 'Expense' ? '#ef4444' : '#3b82f6';
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+            style: {
+                color
+            },
+            children: value
+        }, void 0, false, {
+            fileName: "[project]/app/components/BalanceChart.tsx",
+            lineNumber: 226,
+            columnNumber: 12
+        }, this);
+    };
+    // Limit data points for better visualization
+    const getVisibleData = ()=>{
+        if (activeView === 'monthly') {
+            return processedData.monthlySummary.slice(-12); // Last 12 months
+        } else if (activeView === 'weekly') {
+            return processedData.weeklySummary.slice(-12); // Last 12 weeks
+        } else {
+            // For 'all' view, limit to last 50 transactions for better visualization
+            return processedData.balanceHistory.slice(-50);
+        }
+    };
+    // Calculate statistics
+    const getStats = ()=>{
+        if (!transactions.length) return {
+            total: 0,
+            income: 0,
+            expense: 0
+        };
+        const income = transactions.filter((t)=>t.Type === 'Credit').reduce((sum, t)=>sum + t.Amount, 0);
+        const expense = transactions.filter((t)=>t.Type === 'Debit').reduce((sum, t)=>sum + t.Amount, 0);
+        return {
+            total: income - expense,
+            income,
+            expense
+        };
+    };
+    const stats = getStats();
+    const visibleData = getVisibleData();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
+        className: "space-y-6",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex justify-between items-center mb-4",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                    className: "text-lg font-medium text-gray-900",
-                    children: "Account Balance"
-                }, void 0, false, {
-                    fileName: "[project]/app/components/BalanceChart.tsx",
-                    lineNumber: 91,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 90,
-                columnNumber: 7
-            }, this),
-            isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ChartSkeleton, {}, void 0, false, {
-                fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 95,
-                columnNumber: 9
-            }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ErrorDisplay, {
-                message: error,
-                retry: refetch
-            }, void 0, false, {
-                fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 97,
-                columnNumber: 9
-            }, this) : balanceHistory.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "py-6 flex flex-col items-center justify-center text-center",
+                className: "grid grid-cols-1 md:grid-cols-3 gap-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mb-3 h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "24",
-                            height: "24",
-                            viewBox: "0 0 24 24",
-                            fill: "none",
-                            stroke: "currentColor",
-                            strokeWidth: "2",
-                            strokeLinecap: "round",
-                            strokeLinejoin: "round",
-                            className: "text-gray-400",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
-                                    x: "2",
-                                    y: "5",
-                                    width: "20",
-                                    height: "14",
-                                    rx: "2"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/components/BalanceChart.tsx",
-                                    lineNumber: 102,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
-                                    x1: "2",
-                                    y1: "10",
-                                    x2: "22",
-                                    y2: "10"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/components/BalanceChart.tsx",
-                                    lineNumber: 103,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                        className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "text-sm font-medium text-black-500 mb-1",
+                                children: "Current Balance"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 268,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-2xl font-semibold text-black-500",
+                                children: formatCurrency(stats.total)
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 269,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 267,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "text-sm font-medium text-gray-500 mb-1",
+                                children: "Total Income"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 273,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-2xl font-semibold text-green-500",
+                                children: formatCurrency(stats.income)
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 274,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 272,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                className: "text-sm font-medium text-gray-500 mb-1",
+                                children: "Total Expenses"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 278,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-2xl font-semibold text-red-500",
+                                children: formatCurrency(stats.expense)
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 279,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 277,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/components/BalanceChart.tsx",
+                lineNumber: 266,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "rounded-lg border border-gray-200 bg-white p-4 shadow-sm",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center mb-6",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-lg font-medium text-gray-900",
+                                children: "Financial Overview"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 286,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "inline-flex rounded-md shadow-sm",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>setActiveView('all'),
+                                        className: `px-4 py-2 text-sm font-medium ${activeView === 'all' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-l-lg border border-gray-200`,
+                                        children: "All Time"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 289,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>setActiveView('monthly'),
+                                        className: `px-4 py-2 text-sm font-medium ${activeView === 'monthly' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'} border-t border-b border-gray-200`,
+                                        children: "Monthly"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 299,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>setActiveView('weekly'),
+                                        className: `px-4 py-2 text-sm font-medium ${activeView === 'weekly' ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'} rounded-r-lg border border-gray-200`,
+                                        children: "Weekly"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 309,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 288,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 285,
+                        columnNumber: 9
+                    }, this),
+                    isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ChartSkeleton, {}, void 0, false, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 323,
+                        columnNumber: 11
+                    }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ErrorDisplay, {
+                        message: error,
+                        retry: refetch
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 325,
+                        columnNumber: 11
+                    }, this) : !transactions.length ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(EmptyState, {}, void 0, false, {
+                        fileName: "[project]/app/components/BalanceChart.tsx",
+                        lineNumber: 327,
+                        columnNumber: 11
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "h-80",
+                        children: activeView === 'all' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
+                            width: "100%",
+                            height: "100%",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LineChart"], {
+                                data: visibleData,
+                                margin: {
+                                    top: 5,
+                                    right: 5,
+                                    left: 5,
+                                    bottom: 25
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CartesianGrid"], {
+                                        strokeDasharray: "3 3",
+                                        stroke: "#f0f0f0"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 333,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
+                                        dataKey: "date",
+                                        tick: {
+                                            fontSize: 12
+                                        },
+                                        tickFormatter: (value, index)=>index % 5 === 0 ? value : '',
+                                        height: 60
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 334,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
+                                        axisLine: false,
+                                        tickLine: false,
+                                        tickFormatter: (value)=>formatCurrency(value),
+                                        width: 80,
+                                        style: {
+                                            fontSize: '12px'
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 340,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
+                                        content: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CustomTooltip, {}, void 0, false, {
+                                            fileName: "[project]/app/components/BalanceChart.tsx",
+                                            lineNumber: 347,
+                                            columnNumber: 37
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 347,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
+                                        name: "Balance",
+                                        type: "monotone",
+                                        dataKey: "balance",
+                                        stroke: "#3b82f6",
+                                        strokeWidth: 2,
+                                        dot: false,
+                                        activeDot: {
+                                            r: 6,
+                                            strokeWidth: 0
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 348,
+                                        columnNumber: 19
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 332,
+                                columnNumber: 17
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/app/components/BalanceChart.tsx",
-                            lineNumber: 101,
-                            columnNumber: 13
+                            lineNumber: 331,
+                            columnNumber: 15
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
+                            width: "100%",
+                            height: "100%",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$BarChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["BarChart"], {
+                                data: visibleData,
+                                margin: {
+                                    top: 5,
+                                    right: 5,
+                                    left: 5,
+                                    bottom: 25
+                                },
+                                barGap: 0,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CartesianGrid"], {
+                                        strokeDasharray: "3 3",
+                                        stroke: "#f0f0f0"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 366,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
+                                        dataKey: "date",
+                                        height: 60,
+                                        tick: {
+                                            fontSize: 12
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 367,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
+                                        axisLine: false,
+                                        tickLine: false,
+                                        tickFormatter: (value)=>formatCurrency(value),
+                                        width: 80,
+                                        style: {
+                                            fontSize: '12px'
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 372,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
+                                        content: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CustomTooltip, {}, void 0, false, {
+                                            fileName: "[project]/app/components/BalanceChart.tsx",
+                                            lineNumber: 379,
+                                            columnNumber: 37
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 379,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Legend$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Legend"], {
+                                        formatter: renderColorfulLegendText
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 380,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Bar"], {
+                                        name: "Income",
+                                        dataKey: "income",
+                                        fill: "#22c55e",
+                                        radius: [
+                                            4,
+                                            4,
+                                            0,
+                                            0
+                                        ],
+                                        maxBarSize: 50
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 381,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Bar"], {
+                                        name: "Expense",
+                                        dataKey: "expense",
+                                        fill: "#ef4444",
+                                        radius: [
+                                            4,
+                                            4,
+                                            0,
+                                            0
+                                        ],
+                                        maxBarSize: 50
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 382,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
+                                        name: "Balance",
+                                        type: "monotone",
+                                        dataKey: "balance",
+                                        stroke: "#3b82f6",
+                                        strokeWidth: 2,
+                                        dot: false
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/BalanceChart.tsx",
+                                        lineNumber: 383,
+                                        columnNumber: 19
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/components/BalanceChart.tsx",
+                                lineNumber: 361,
+                                columnNumber: 17
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 360,
+                            columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/BalanceChart.tsx",
-                        lineNumber: 100,
+                        lineNumber: 329,
                         columnNumber: 11
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                        className: "text-base font-medium text-gray-900",
-                        children: "No balance data available"
+                    !isLoading && !error && transactions.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "pt-4 text-center text-sm text-gray-500",
+                        children: activeView === 'all' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: "Showing account balance over time based on your transactions"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 400,
+                            columnNumber: 15
+                        }, this) : activeView === 'monthly' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: "Monthly income, expenses and balance for the last 12 months"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 402,
+                            columnNumber: 15
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: "Weekly income, expenses and balance for the last 12 weeks"
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/BalanceChart.tsx",
+                            lineNumber: 404,
+                            columnNumber: 15
+                        }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/BalanceChart.tsx",
-                        lineNumber: 106,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "mt-1 text-sm text-gray-500",
-                        children: "Your account balance will appear here once you have transactions."
-                    }, void 0, false, {
-                        fileName: "[project]/app/components/BalanceChart.tsx",
-                        lineNumber: 107,
+                        lineNumber: 398,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 99,
-                columnNumber: 9
-            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "h-64",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
-                    width: "100%",
-                    height: "100%",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LineChart"], {
-                        data: balanceHistory,
-                        margin: {
-                            top: 5,
-                            right: 5,
-                            left: 5,
-                            bottom: 5
-                        },
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
-                                dataKey: "id",
-                                hide: true
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/BalanceChart.tsx",
-                                lineNumber: 113,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
-                                axisLine: false,
-                                tickLine: false,
-                                tickFormatter: (value)=>formatCurrency(value),
-                                width: 60,
-                                style: {
-                                    fontSize: '12px'
-                                }
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/BalanceChart.tsx",
-                                lineNumber: 114,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
-                                content: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CustomTooltip, {}, void 0, false, {
-                                    fileName: "[project]/app/components/BalanceChart.tsx",
-                                    lineNumber: 121,
-                                    columnNumber: 33
-                                }, void 0)
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/BalanceChart.tsx",
-                                lineNumber: 121,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
-                                type: "monotone",
-                                dataKey: "balance",
-                                stroke: "#000",
-                                strokeWidth: 2,
-                                dot: false,
-                                activeDot: {
-                                    r: 6,
-                                    fill: "#000",
-                                    strokeWidth: 0
-                                }
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/BalanceChart.tsx",
-                                lineNumber: 122,
-                                columnNumber: 15
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/components/BalanceChart.tsx",
-                        lineNumber: 112,
-                        columnNumber: 13
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/app/components/BalanceChart.tsx",
-                    lineNumber: 111,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/components/BalanceChart.tsx",
-                lineNumber: 110,
-                columnNumber: 9
+                lineNumber: 284,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/BalanceChart.tsx",
-        lineNumber: 89,
+        lineNumber: 264,
         columnNumber: 5
     }, this);
 }

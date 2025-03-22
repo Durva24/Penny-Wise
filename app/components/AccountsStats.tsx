@@ -2,36 +2,129 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FinancialSummary, fetchTransactionSummary } from "@/app/api/getStats";
-import { ArrowUpRight, ArrowDownRight, Wallet, RefreshCw } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Wallet, RefreshCw, Calendar, ChevronRight, ChevronLeft } from "lucide-react";
+import { useTransactions, Transaction } from "@/app/api/getTransaction";
+
+// Extended interface to include time period data
+interface FinancialSummary {
+  totalBalance: number;
+  totalCredited: number;
+  totalSpent: number;
+}
+
+interface TimePeriodData {
+  overall: FinancialSummary;
+  weekly: FinancialSummary;
+  monthly: FinancialSummary;
+  currentWeek: string;
+  currentMonth: string;
+}
 
 export default function FinancialDashboard() {
-  const [summary, setSummary] = useState<FinancialSummary | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { transactions, isLoading, error: fetchError, refetch } = useTransactions();
+  
+  const [summaryData, setSummaryData] = useState<TimePeriodData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'overall' | 'monthly' | 'weekly'>('overall');
+  const [currentWeekOffset, setCurrentWeekOffset] = useState<number>(0);
+  const [currentMonthOffset, setCurrentMonthOffset] = useState<number>(0);
+
+  // Calculate financial summaries
+  const calculateSummaries = (transactions: Transaction[]): TimePeriodData => {
+    // Initialize empty summary objects
+    const overall: FinancialSummary = { totalBalance: 0, totalCredited: 0, totalSpent: 0 };
+    const weekly: FinancialSummary = { totalBalance: 0, totalCredited: 0, totalSpent: 0 };
+    const monthly: FinancialSummary = { totalBalance: 0, totalCredited: 0, totalSpent: 0 };
+    
+    // Get current date for weekly and monthly filters
+    const today = new Date();
+    
+    // Calculate week range based on offset
+    const currentWeekStart = new Date(today);
+    currentWeekStart.setDate(today.getDate() - today.getDay() + (currentWeekOffset * 7));
+    const currentWeekEnd = new Date(currentWeekStart);
+    currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
+
+    // Calculate month range based on offset
+    const currentMonth = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset + 1, 0);
+    
+    // Format date strings for display
+    const weekDateFormat = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' });
+    const currentWeekStr = `${weekDateFormat.format(currentWeekStart)} - ${weekDateFormat.format(currentWeekEnd)}`;
+    
+    const monthDateFormat = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' });
+    const currentMonthStr = monthDateFormat.format(currentMonth);
+
+    // Process transactions
+    transactions.forEach(transaction => {
+      const amount = transaction.Amount;
+      const transactionDate = new Date(transaction.Date);
+      
+      // Overall summary
+      if (transaction.Type === 'Credit') {
+        overall.totalCredited += amount;
+        overall.totalBalance += amount;
+      } else {
+        overall.totalSpent += amount;
+        overall.totalBalance -= amount;
+      }
+      
+      // Weekly summary
+      if (transactionDate >= currentWeekStart && transactionDate <= currentWeekEnd) {
+        if (transaction.Type === 'Credit') {
+          weekly.totalCredited += amount;
+          weekly.totalBalance += amount;
+        } else {
+          weekly.totalSpent += amount;
+          weekly.totalBalance -= amount;
+        }
+      }
+      
+      // Monthly summary
+      if (transactionDate.getMonth() === currentMonth.getMonth() && 
+          transactionDate.getFullYear() === currentMonth.getFullYear()) {
+        if (transaction.Type === 'Credit') {
+          monthly.totalCredited += amount;
+          monthly.totalBalance += amount;
+        } else {
+          monthly.totalSpent += amount;
+          monthly.totalBalance -= amount;
+        }
+      }
+    });
+    
+    return {
+      overall,
+      weekly,
+      monthly,
+      currentWeek: currentWeekStr,
+      currentMonth: currentMonthStr
+    };
+  };
 
   const loadData = async () => {
     try {
-      setLoading(true);
-      const data = await fetchTransactionSummary();
-      setSummary(data);
+      setRefreshing(true);
+      await refetch();
       setError(null);
     } catch (err) {
       setError("Failed to load financial data");
       console.error(err);
     } finally {
-      setLoading(false);
       setRefreshing(false);
     }
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (transactions.length > 0) {
+      const data = calculateSummaries(transactions);
+      setSummaryData(data);
+    }
+  }, [transactions, currentWeekOffset, currentMonthOffset]);
 
   const handleRefresh = () => {
-    setRefreshing(true);
     loadData();
   };
 
@@ -43,7 +136,28 @@ export default function FinancialDashboard() {
     }).format(amount);
   };
 
-  if (loading && !refreshing) {
+  const handlePreviousWeek = () => {
+    setCurrentWeekOffset(prev => prev - 1);
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeekOffset(prev => prev + 1);
+  };
+
+  const handlePreviousMonth = () => {
+    setCurrentMonthOffset(prev => prev - 1);
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonthOffset(prev => prev + 1);
+  };
+
+  const resetTimeframes = () => {
+    setCurrentWeekOffset(0);
+    setCurrentMonthOffset(0);
+  };
+
+  if (isLoading && !refreshing) {
     return (
       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm animate-pulse">
         <div className="h-6 bg-gray-200 rounded w-1/3 mb-6"></div>
@@ -56,6 +170,21 @@ export default function FinancialDashboard() {
       </div>
     );
   }
+
+  // Get the current active summary based on selected tab
+  const getActiveSummary = () => {
+    if (!summaryData) return null;
+    switch (activeTab) {
+      case 'monthly':
+        return summaryData.monthly;
+      case 'weekly':
+        return summaryData.weekly;
+      default:
+        return summaryData.overall;
+    }
+  };
+
+  const activeSummary = getActiveSummary();
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
@@ -73,7 +202,55 @@ export default function FinancialDashboard() {
         </div>
       </div>
       
-      {error && (
+      {/* Time period tabs */}
+      <div className="flex border-b border-gray-200 mb-6">
+        <button
+          onClick={() => {setActiveTab('overall'); resetTimeframes();}}
+          className={`py-2 px-4 font-medium text-sm ${activeTab === 'overall' ? 'text-black border-b-2 border-black' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Overall
+        </button>
+        <button
+          onClick={() => setActiveTab('monthly')}
+          className={`py-2 px-4 font-medium text-sm ${activeTab === 'monthly' ? 'text-black border-b-2 border-black' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Monthly
+        </button>
+        <button
+          onClick={() => setActiveTab('weekly')}
+          className={`py-2 px-4 font-medium text-sm ${activeTab === 'weekly' ? 'text-black border-b-2 border-black' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Weekly
+        </button>
+      </div>
+      
+      {/* Time period navigation */}
+      {activeTab !== 'overall' && summaryData && (
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={activeTab === 'weekly' ? handlePreviousWeek : handlePreviousMonth}
+            className="p-2 rounded-full hover:bg-gray-100 focus:outline-none"
+          >
+            <ChevronLeft size={16} className="text-gray-600" />
+          </button>
+          
+          <div className="flex items-center">
+            <Calendar size={16} className="text-gray-600 mr-2" />
+            <span className="font-medium">
+              {activeTab === 'weekly' ? summaryData.currentWeek : summaryData.currentMonth}
+            </span>
+          </div>
+          
+          <button
+            onClick={activeTab === 'weekly' ? handleNextWeek : handleNextMonth}
+            className="p-2 rounded-full hover:bg-gray-100 focus:outline-none"
+          >
+            <ChevronRight size={16} className="text-gray-600" />
+          </button>
+        </div>
+      )}
+      
+      {fetchError && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600 font-medium flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
@@ -81,7 +258,7 @@ export default function FinancialDashboard() {
               <line x1="12" y1="8" x2="12" y2="12"></line>
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
-            {error}
+            {fetchError}
           </p>
           <button 
             onClick={handleRefresh} 
@@ -102,11 +279,11 @@ export default function FinancialDashboard() {
                 <p className="text-base font-medium text-gray-600">Total Balance</p>
               </div>
               <p className="text-3xl font-bold text-gray-900 mb-2">
-                {summary ? formatCurrency(summary.totalBalance) : '₹0'}
+                {activeSummary ? formatCurrency(activeSummary.totalBalance) : '₹0'}
               </p>
               <div className="mt-1">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${summary && summary.totalBalance >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                  {summary && summary.totalBalance >= 0 ? "Positive Balance" : "Negative Balance"}
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${activeSummary && activeSummary.totalBalance >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {activeSummary && activeSummary.totalBalance >= 0 ? "Positive Balance" : "Negative Balance"}
                 </span>
               </div>
             </div>
@@ -122,7 +299,7 @@ export default function FinancialDashboard() {
                 <p className="text-base font-medium text-gray-600">Total Income</p>
               </div>
               <p className="text-3xl font-bold text-gray-900 mb-2">
-                {summary ? formatCurrency(summary.totalCredited) : '₹0'}
+                {activeSummary ? formatCurrency(activeSummary.totalCredited) : '₹0'}
               </p>
               <div className="mt-1">
                 <div className="flex items-center text-sm">
@@ -144,7 +321,7 @@ export default function FinancialDashboard() {
                 <p className="text-base font-medium text-gray-600">Total Expenses</p>
               </div>
               <p className="text-3xl font-bold text-gray-900 mb-2">
-                {summary ? formatCurrency(summary.totalSpent) : '₹0'}
+                {activeSummary ? formatCurrency(activeSummary.totalSpent) : '₹0'}
               </p>
               <div className="mt-1">
                 <div className="flex items-center text-sm">
@@ -159,15 +336,15 @@ export default function FinancialDashboard() {
       </div>
 
       {/* Progress bar showing spending vs income ratio */}
-      {summary && (
+      {activeSummary && (
         <div className="mt-8 p-6 border border-gray-200 rounded-lg bg-white">
           <div className="flex justify-between items-center mb-4">
             <p className="text-base font-medium text-gray-900">Spending vs Income</p>
             <div className="flex items-center">
               <span className="inline-block h-3 w-3 rounded-full bg-black mr-1"></span>
               <p className="text-sm font-medium text-gray-600">
-                {summary.totalSpent > 0 && summary.totalCredited > 0
-                  ? `${Math.round((summary.totalSpent / summary.totalCredited) * 100)}%`
+                {activeSummary.totalSpent > 0 && activeSummary.totalCredited > 0
+                  ? `${Math.round((activeSummary.totalSpent / activeSummary.totalCredited) * 100)}%`
                   : "0%"}
               </p>
             </div>
@@ -182,18 +359,18 @@ export default function FinancialDashboard() {
               </div>
               <div className="text-right">
                 <span className="text-xs font-semibold inline-block text-gray-600">
-                  {summary.totalSpent > 0 && summary.totalCredited > 0
-                    ? Math.round((summary.totalSpent / summary.totalCredited) * 100)
+                  {activeSummary.totalSpent > 0 && activeSummary.totalCredited > 0
+                    ? Math.round((activeSummary.totalSpent / activeSummary.totalCredited) * 100)
                     : 0}%
                 </span>
               </div>
             </div>
             <div className="overflow-hidden h-4 mb-2 text-xs flex rounded-full bg-gray-200">
               <div
-                style={{ width: `${Math.min(100, Math.round((summary.totalSpent / summary.totalCredited) * 100) || 0)}%` }}
+                style={{ width: `${Math.min(100, Math.round((activeSummary.totalSpent / activeSummary.totalCredited) * 100) || 0)}%` }}
                 className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${
-                  summary.totalSpent / summary.totalCredited < 0.7 ? 'bg-black' : 
-                  summary.totalSpent / summary.totalCredited < 0.9 ? 'bg-gray-700' : 'bg-gray-900'
+                  activeSummary.totalSpent / activeSummary.totalCredited < 0.7 ? 'bg-black' : 
+                  activeSummary.totalSpent / activeSummary.totalCredited < 0.9 ? 'bg-gray-700' : 'bg-gray-900'
                 }`}
               ></div>
             </div>
@@ -218,13 +395,13 @@ export default function FinancialDashboard() {
       )}
 
       {/* Quick Stats */}
-      {summary && (
+      {activeSummary && (
         <div className="mt-6 grid grid-cols-2 gap-4">
           <div className="p-4 border border-gray-200 rounded-lg bg-white">
             <p className="text-sm text-gray-600">Savings Rate</p>
-            <p className="text-gray-xl font-semibold">
-              {summary.totalCredited > 0 
-                ? `${Math.round(((summary.totalCredited - summary.totalSpent) / summary.totalCredited) * 100)}%` 
+            <p className="text-xl font-semibold">
+              {activeSummary.totalCredited > 0 
+                ? `${Math.round(((activeSummary.totalCredited - activeSummary.totalSpent) / activeSummary.totalCredited) * 100)}%` 
                 : "0%"}
             </p>
           </div>
@@ -232,7 +409,10 @@ export default function FinancialDashboard() {
           <div className="p-4 border border-gray-200 rounded-lg bg-white">
             <p className="text-sm text-gray-600">Average Transaction</p>
             <p className="text-xl font-semibold">
-              {formatCurrency((summary.totalCredited + summary.totalSpent) / 2)}
+              {formatCurrency((activeSummary.totalCredited + activeSummary.totalSpent) / 
+                (activeSummary === summaryData?.weekly ? 7 : 
+                 activeSummary === summaryData?.monthly ? 30 : 
+                 Math.max(transactions.length, 1)))}
             </p>
           </div>
         </div>

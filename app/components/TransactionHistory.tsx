@@ -1,9 +1,7 @@
-// components/dashboard/TransactionHistory.tsx
 "use client";
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState } from 'react';
 import { useTransactions } from '@/app/api/getTransaction';
-
 // Currency formatter for Indian Rupees
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('en-IN', {
@@ -11,6 +9,20 @@ const formatCurrency = (amount: number) => {
     currency: 'INR',
     maximumFractionDigits: 0
   }).format(amount);
+};
+
+// Format date to a more readable format
+const formatDate = (dateString: string) => {
+  if (!dateString) return '';
+  
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return '';
+  
+  return new Intl.DateTimeFormat('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
 };
 
 // Function to get transaction icon based on category
@@ -108,7 +120,10 @@ const TransactionSkeleton = () => (
             <div className="h-2 w-16 bg-gray-200 rounded mt-2"></div>
           </div>
         </div>
-        <div className="h-3 w-16 bg-gray-200 rounded"></div>
+        <div className="flex flex-col items-end">
+          <div className="h-3 w-16 bg-gray-200 rounded"></div>
+          <div className="h-2 w-12 bg-gray-200 rounded mt-2"></div>
+        </div>
       </div>
     ))}
   </div>
@@ -167,8 +182,15 @@ export default function TransactionHistory() {
     return typeMatch && categoryMatch;
   });
 
+  // Sort transactions by date (newest first)
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    const dateA = a.Date ? new Date(a.Date).getTime() : 0;
+    const dateB = b.Date ? new Date(b.Date).getTime() : 0;
+    return dateB - dateA;
+  });
+
   // Limit to 7 transactions
-  const displayTransactions = filteredTransactions.slice(0, 7);
+  const displayTransactions = sortedTransactions.slice(0, 7);
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
@@ -243,8 +265,11 @@ export default function TransactionHistory() {
                 <div className="flex items-center">
                   {getTransactionIcon(transaction.Category)}
                   <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">{transaction.Name}</p>
-                    <p className="text-xs text-gray-500">{transaction.Category} • {transaction['Transaction Type']}</p>
+                    <p className="text-sm font-medium text-gray-900">{transaction.Name}</p>
+                    <p className="text-xs text-gray-500">
+                      {transaction.Category} • {transaction['Transaction Type']}
+                      {transaction.Date && ` • ${formatDate(transaction.Date)}`}
+                    </p>
                   </div>
                 </div>
                 <div className={`text-sm font-medium ${

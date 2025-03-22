@@ -1,4 +1,3 @@
-// services/transactionApi.ts
 interface TransactionData {
   name: string;
   type: string; // "Income" or "Expense"
@@ -17,22 +16,32 @@ interface TransactionData {
 export const addTransaction = async (data: TransactionData): Promise<any> => {
   try {
     // Base URL for the Google Apps Script
-    const baseUrl = "https://script.google.com/macros/s/AKfycbyNGVUZ0QojssudgYD2JtDLvaqYNnJ1buqzQ07RRL_AzVtYfh9_z2lpogwdlXwk6UD68w/exec";
+    const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
     
     // Create URL with query parameters
     const url = new URL(baseUrl);
+    url.searchParams.append("action", "addTransaction");
     
-    // Add all parameters to the URL
-    url.searchParams.append("name", data.name);
-    url.searchParams.append("type", data.type);
-    url.searchParams.append("amount", data.amount.toString());
-    url.searchParams.append("transactionType", data.transactionType);
-    url.searchParams.append("category", data.category);
-    url.searchParams.append("note", data.note);
-    url.searchParams.append("date", data.date);
+    // Create payload for POST request
+    const payload = {
+      name: data.name,
+      type: data.type,
+      amount: data.amount,
+      transactionType: data.transactionType,
+      category: data.category || "",
+      note: data.note || "",
+      date: data.date || new Date().toISOString().split('T')[0]
+    };
     
-    // Make GET request to the URL with parameters
-    const response = await fetch(url.toString());
+    // Make POST request with JSON payload
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      redirect: 'follow'
+    });
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -55,6 +64,94 @@ export const addTransaction = async (data: TransactionData): Promise<any> => {
     }
   } catch (error) {
     console.error("Error adding transaction:", error);
+    throw error;
+  }
+};
+
+/**
+ * Gets all transactions from the spreadsheet
+ * @returns Promise with the list of transactions
+ */
+export const getTransactions = async (): Promise<any> => {
+  try {
+    const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+    
+    const url = new URL(baseUrl);
+    url.searchParams.append("action", "getTransactions");
+    
+    const response = await fetch(url.toString());
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error getting transactions:", error);
+    throw error;
+  }
+};
+
+/**
+ * Updates an existing transaction in the spreadsheet
+ * @param data Transaction data with Sr. No. to identify which transaction to update
+ * @returns Promise with the response from the server
+ */
+export const updateTransaction = async (data: TransactionData & { "Sr. No.": number }): Promise<any> => {
+  try {
+    const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+    
+    const url = new URL(baseUrl);
+    url.searchParams.append("action", "updateTransaction");
+    
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      redirect: 'follow'
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating transaction:", error);
+    throw error;
+  }
+};
+
+/**
+ * Deletes a transaction from the spreadsheet
+ * @param id The Sr. No. of the transaction to delete
+ * @returns Promise with the response from the server
+ */
+export const deleteTransaction = async (id: number): Promise<any> => {
+  try {
+    const baseUrl = "https://script.google.com/macros/s/AKfycbwpVDMAbxpwKP0mwyfj_b19cMUMx4JOeVLPgjDcHlRQYX2NHvCm9OOFmApbGD3yYbn-dg/exec";
+    
+    const url = new URL(baseUrl);
+    url.searchParams.append("action", "deleteTransaction");
+    
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+      redirect: 'follow'
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting transaction:", error);
     throw error;
   }
 };

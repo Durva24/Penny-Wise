@@ -3,7 +3,6 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { useTransactions } from "@/app/api/getTransaction";
 
-// Import components
 import ActionButtons from "@/app/components/ActionButtons";
 import AiSuggestions from "@/app/components/AiSuggestions";
 import SpendingChart from "@/app/components/SpendingChart";
@@ -49,7 +48,7 @@ const BudgetOverview = () => {
   const percentageSpent = Math.min(Math.round((budgetData.spentAmount / budgetData.totalBudget) * 100), 100);
   
   // Format currency for Indian Rupees
-  const formatCurrency = (amount) => {
+  const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
@@ -58,7 +57,7 @@ const BudgetOverview = () => {
   };
 
   // Determine progress bar color based on percentage
-  const getProgressColor = (percentage) => {
+  const getProgressColor = (percentage: number): string => {
     if (percentage >= 90) return 'bg-red-500';
     if (percentage >= 75) return 'bg-orange-500';
     if (percentage >= 50) return 'bg-yellow-500';
@@ -84,7 +83,7 @@ const BudgetOverview = () => {
       ) : (
         <div className="space-y-3">
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">Monthly Budget</span>
+            <span className="text-sm text-gray-900 font-medium">Monthly Budget</span>
             <span className="font-medium text-gray-900">
               {formatCurrency(budgetData.totalBudget)}
             </span>
@@ -98,14 +97,14 @@ const BudgetOverview = () => {
           </div>
           
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">Spent</span>
-            <span className="text-sm text-gray-900">
+            <span className="text-sm text-gray-900 font-medium">Spent</span>
+            <span className="text-sm text-gray-900 font-medium">
               {formatCurrency(budgetData.spentAmount)} ({percentageSpent}%)
             </span>
           </div>
           
           <div className="flex justify-between pt-2">
-            <span className="text-sm text-gray-600">Remaining</span>
+            <span className="text-sm text-gray-900 font-medium">Remaining</span>
             <span className={`text-sm font-medium ${percentageSpent >= 90 ? 'text-red-600' : 'text-green-600'}`}>
               {formatCurrency(budgetData.totalBudget - budgetData.spentAmount)}
             </span>
@@ -132,13 +131,13 @@ export default function Dashboard() {
   const { transactions, isLoading: isLoadingTransactions } = useTransactions();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white">
+      <header className="border-b border-gray-200 bg-white shadow-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <h1 className="text-2xl font-bold text-black">Penny Wise</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Penny Wise</h1>
           <div className="flex items-center gap-4">
-            <button className="rounded-full bg-gray-100 p-2 relative">
+            <button className="rounded-full bg-gray-100 p-2 relative text-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -149,7 +148,7 @@ export default function Dashboard() {
                 </span>
               )}
             </button>
-            <div className="h-8 w-8 rounded-full bg-black text-white flex items-center justify-center">
+            <div className="h-8 w-8 rounded-full bg-gray-800 text-white flex items-center justify-center">
               <span className="text-sm font-medium">JD</span>
             </div>
           </div>

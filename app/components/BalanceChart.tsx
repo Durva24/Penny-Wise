@@ -1,11 +1,10 @@
-// components/dashboard/TransactionDashboard.tsx
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { useTransactions, Transaction } from '@/app/api/getTransaction';
+import { useTransactions } from '@/app/api/getTransaction';
 import { 
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Legend, Cell 
+  Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 
 // Type definitions for our data
@@ -37,18 +36,18 @@ const ChartSkeleton = () => (
 // Error component
 const ErrorDisplay = ({ message, retry }: { message: string, retry: () => void }) => (
   <div className="py-6 flex flex-col items-center justify-center text-center">
-    <div className="mb-3 h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
+    <div className="mb-3 h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-800">
         <circle cx="12" cy="12" r="10"></circle>
         <line x1="12" y1="8" x2="12" y2="12"></line>
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
     </div>
     <h4 className="text-base font-medium text-gray-900">Failed to load transaction data</h4>
-    <p className="mt-1 text-sm text-gray-500">{message}</p>
+    <p className="mt-1 text-sm text-gray-700">{message}</p>
     <button 
       onClick={retry}
-      className="mt-4 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50"
+      className="mt-4 rounded-lg border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50"
     >
       Try Again
     </button>
@@ -59,13 +58,13 @@ const ErrorDisplay = ({ message, retry }: { message: string, retry: () => void }
 const EmptyState = () => (
   <div className="py-6 flex flex-col items-center justify-center text-center">
     <div className="mb-3 h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-700">
         <rect x="2" y="5" width="20" height="14" rx="2"></rect>
         <line x1="2" y1="10" x2="22" y2="10"></line>
       </svg>
     </div>
     <h4 className="text-base font-medium text-gray-900">No transaction data available</h4>
-    <p className="mt-1 text-sm text-gray-500">Your transactions will appear here once you add them.</p>
+    <p className="mt-1 text-sm text-gray-700">Your transactions will appear here once you add them.</p>
   </div>
 );
 
@@ -205,25 +204,19 @@ export default function TransactionDashboard() {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-gray-200 shadow-sm rounded-lg text-sm">
-          {payload[0].payload.date && <p className="font-medium text-gray-700 mb-1">{payload[0].payload.date}</p>}
+        <div className="bg-white p-3 border border-gray-300 shadow-sm rounded-lg text-sm">
+          {payload[0].payload.date && <p className="font-medium text-gray-900 mb-1">{payload[0].payload.date}</p>}
           
           {payload.map((entry: any, index: number) => (
-            <p key={`tooltip-${index}`} style={{ color: entry.color }} className="flex items-center justify-between gap-4">
-              <span>{entry.name}:</span>
-              <span className="font-medium">{formatCurrency(entry.value)}</span>
+            <p key={`tooltip-${index}`} className="flex items-center justify-between gap-4">
+              <span className="text-gray-800">{entry.name}:</span>
+              <span className="font-medium text-gray-900">{formatCurrency(entry.value)}</span>
             </p>
           ))}
         </div>
       );
     }
     return null;
-  };
-  
-  // Custom legend for bar charts
-  const renderColorfulLegendText = (value: string) => {
-    const color = value === 'Income' ? '#22c55e' : value === 'Expense' ? '#ef4444' : '#3b82f6';
-    return <span style={{ color }}>{value}</span>;
   };
   
   // Limit data points for better visualization
@@ -264,24 +257,24 @@ export default function TransactionDashboard() {
     <div className="space-y-6">
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h4 className="text-sm font-medium text-black-500 mb-1">Current Balance</h4>
-          <p className="text-2xl font-semibold text-black-500">{formatCurrency(stats.total)}</p>
+        <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
+          <h4 className="text-sm font-medium text-gray-700 mb-1">Current Balance</h4>
+          <p className="text-2xl font-semibold text-gray-900">{formatCurrency(stats.total)}</p>
         </div>
         
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h4 className="text-sm font-medium text-gray-500 mb-1">Total Income</h4>
-          <p className="text-2xl font-semibold text-green-500">{formatCurrency(stats.income)}</p>
+        <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
+          <h4 className="text-sm font-medium text-gray-700 mb-1">Total Income</h4>
+          <p className="text-2xl font-semibold text-gray-900">{formatCurrency(stats.income)}</p>
         </div>
         
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <h4 className="text-sm font-medium text-gray-500 mb-1">Total Expenses</h4>
-          <p className="text-2xl font-semibold text-red-500">{formatCurrency(stats.expense)}</p>
+        <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
+          <h4 className="text-sm font-medium text-gray-700 mb-1">Total Expenses</h4>
+          <p className="text-2xl font-semibold text-gray-900">{formatCurrency(stats.expense)}</p>
         </div>
       </div>
       
       {/* Main Chart */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-medium text-gray-900">Financial Overview</h3>
           
@@ -291,8 +284,8 @@ export default function TransactionDashboard() {
               className={`px-4 py-2 text-sm font-medium ${
                 activeView === 'all'
                   ? 'bg-gray-900 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              } rounded-l-lg border border-gray-200`}
+                  : 'bg-white text-gray-800 hover:bg-gray-100'
+              } rounded-l-lg border border-gray-300`}
             >
               All Time
             </button>
@@ -301,8 +294,8 @@ export default function TransactionDashboard() {
               className={`px-4 py-2 text-sm font-medium ${
                 activeView === 'monthly'
                   ? 'bg-gray-900 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              } border-t border-b border-gray-200`}
+                  : 'bg-white text-gray-800 hover:bg-gray-100'
+              } border-t border-b border-gray-300`}
             >
               Monthly
             </button>
@@ -311,8 +304,8 @@ export default function TransactionDashboard() {
               className={`px-4 py-2 text-sm font-medium ${
                 activeView === 'weekly'
                   ? 'bg-gray-900 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              } rounded-r-lg border border-gray-200`}
+                  : 'bg-white text-gray-800 hover:bg-gray-100'
+              } rounded-r-lg border border-gray-300`}
             >
               Weekly
             </button>
@@ -333,7 +326,7 @@ export default function TransactionDashboard() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis 
                     dataKey="date" 
-                    tick={{ fontSize: 12 }}
+                    tick={{ fontSize: 12, fill: "#333333" }}
                     tickFormatter={(value, index) => index % 5 === 0 ? value : ''}
                     height={60}
                   />
@@ -342,17 +335,17 @@ export default function TransactionDashboard() {
                     tickLine={false}
                     tickFormatter={(value) => formatCurrency(value)}
                     width={80}
-                    style={{ fontSize: '12px' }}
+                    style={{ fontSize: '12px', fill: "#333333" }}
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Line
                     name="Balance"
                     type="monotone"
                     dataKey="balance"
-                    stroke="#3b82f6"
+                    stroke="#000000"
                     strokeWidth={2}
                     dot={false}
-                    activeDot={{ r: 6, strokeWidth: 0 }}
+                    activeDot={{ r: 6, strokeWidth: 0, fill: "#000000" }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -361,30 +354,30 @@ export default function TransactionDashboard() {
                 <BarChart 
                   data={visibleData} 
                   margin={{ top: 5, right: 5, left: 5, bottom: 25 }}
-                  barGap={0}
+                  barGap={5}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis 
                     dataKey="date" 
                     height={60}
-                    tick={{ fontSize: 12 }}
+                    tick={{ fontSize: 12, fill: "#333333" }}
                   />
                   <YAxis 
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(value) => formatCurrency(value)}
                     width={80}
-                    style={{ fontSize: '12px' }}
+                    style={{ fontSize: '12px', fill: "#333333" }}
                   />
                   <Tooltip content={<CustomTooltip />} />
-                  <Legend formatter={renderColorfulLegendText} />
-                  <Bar name="Income" dataKey="income" fill="#22c55e" radius={[4, 4, 0, 0]} maxBarSize={50} />
-                  <Bar name="Expense" dataKey="expense" fill="#ef4444" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                  <Legend />
+                  <Bar name="Income" dataKey="income" fill="#333333" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar name="Expense" dataKey="expense" fill="#888888" radius={[4, 4, 0, 0]} maxBarSize={40} />
                   <Line
                     name="Balance"
                     type="monotone"
                     dataKey="balance"
-                    stroke="#3b82f6"
+                    stroke="#000000"
                     strokeWidth={2}
                     dot={false}
                   />
@@ -395,7 +388,7 @@ export default function TransactionDashboard() {
         )}
         
         {!isLoading && !error && transactions.length > 0 && (
-          <div className="pt-4 text-center text-sm text-gray-500">
+          <div className="pt-4 text-center text-sm text-gray-700">
             {activeView === 'all' ? (
               <p>Showing account balance over time based on your transactions</p>
             ) : activeView === 'monthly' ? (

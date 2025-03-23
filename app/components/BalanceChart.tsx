@@ -16,6 +16,27 @@ type TransactionSummary = {
   expense: number;
 };
 
+// Custom tick component for XAxis to handle text rotation
+const CustomXAxisTick = (props: any) => {
+  const { x, y, payload } = props;
+  
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text 
+        x={0} 
+        y={0} 
+        dy={16} 
+        textAnchor="middle" 
+        fill="#666"
+        fontSize={12}
+        transform="rotate(-45)"
+      >
+        {payload.value}
+      </text>
+    </g>
+  );
+};
+
 // Currency formatter for Indian Rupees
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('en-IN', {
@@ -125,9 +146,16 @@ export default function TransactionDashboard() {
         balance -= transaction.Amount;
       }
       
+      // Format the date to a shorter version for better display
+      const date = parseDate(transaction.Date);
+      const shortDate = date.toLocaleDateString('en-IN', { 
+        day: '2-digit', 
+        month: 'short'
+      });
+      
       return {
         id: index,
-        date: transaction.Date,
+        date: shortDate,
         name: transaction.Name,
         amount: transaction.Amount,
         type: transaction.Type,
@@ -175,7 +203,7 @@ export default function TransactionDashboard() {
       const weekNumber = Math.ceil(days / 7);
       
       const weekKey = `${date.getFullYear()}-W${String(weekNumber).padStart(2, '0')}`;
-      const weekLabel = `W${weekNumber}, ${date.toLocaleString('default', { month: 'short' })}`;
+      const weekLabel = `W${weekNumber}`;
       
       if (!weeklyData[weekKey]) {
         weeklyData[weekKey] = {
@@ -226,8 +254,9 @@ export default function TransactionDashboard() {
     } else if (activeView === 'weekly') {
       return processedData.weeklySummary.slice(-12); // Last 12 weeks
     } else {
-      // For 'all' view, limit to last 50 transactions for better visualization
-      return processedData.balanceHistory.slice(-50);
+      // For 'all' view, limit to last 30 transactions for better visualization
+      // Reduced from 50 to 30 to decrease X-axis crowding
+      return processedData.balanceHistory.slice(-30);
     }
   };
   
@@ -252,6 +281,17 @@ export default function TransactionDashboard() {
   
   const stats = getStats();
   const visibleData = getVisibleData();
+  
+  // Determine how often to show ticks to prevent overcrowding
+  const skipTicks = (view: PeriodView) => {
+    if (view === 'all') {
+      // For all time view, show every 5th tick
+      return (value: any, index: number) => index % 5 === 0 ? value : '';
+    } else {
+      // For monthly/weekly views, show all ticks
+      return (value: any) => value;
+    }
+  };
   
   return (
     <div className="space-y-6">
@@ -322,13 +362,16 @@ export default function TransactionDashboard() {
           <div className="h-80">
             {activeView === 'all' ? (
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={visibleData} margin={{ top: 5, right: 5, left: 5, bottom: 25 }}>
+                <LineChart 
+                  data={visibleData} 
+                  margin={{ top: 5, right: 5, left: 5, bottom: 45 }} // Increased bottom margin for rotated labels
+                >
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis 
                     dataKey="date" 
-                    tick={{ fontSize: 12, fill: "#333333" }}
-                    tickFormatter={(value, index) => index % 5 === 0 ? value : ''}
-                    height={60}
+                    tick={CustomXAxisTick}
+                    height={70} // Increased height to accommodate rotated labels
+                    interval={0} // Show all ticks
                   />
                   <YAxis 
                     axisLine={false}
@@ -353,14 +396,15 @@ export default function TransactionDashboard() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={visibleData} 
-                  margin={{ top: 5, right: 5, left: 5, bottom: 25 }}
+                  margin={{ top: 5, right: 5, left: 5, bottom: 45 }} // Increased bottom margin
                   barGap={5}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis 
                     dataKey="date" 
-                    height={60}
-                    tick={{ fontSize: 12, fill: "#333333" }}
+                    tick={CustomXAxisTick}
+                    height={70} // Increased height
+                    interval={0} // Show all ticks
                   />
                   <YAxis 
                     axisLine={false}

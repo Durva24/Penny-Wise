@@ -7,6 +7,7 @@ import ActionButtons from "@/app/components/ActionButtons";
 import AiSuggestions from "@/app/components/AiSuggestions";
 import SpendingChart from "@/app/components/SpendingChart";
 import BalanceGraph from "@/app/components/BalanceChart";
+import CategoryComponent from "@/app/components/Category";  
 
 // Lazy load components for better performance 
 const AccountsStats = lazy(() => import("@/app/components/AccountsStats"));
@@ -171,6 +172,10 @@ export default function Dashboard() {
             
             <Suspense fallback={<ComponentLoader />}>
               <SpendingChart />
+            </Suspense>
+            
+            <Suspense fallback={<ComponentLoader />}>
+              <CategoryComponent />
             </Suspense>
             
             <Suspense fallback={<ComponentLoader />}>

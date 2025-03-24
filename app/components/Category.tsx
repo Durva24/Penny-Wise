@@ -12,6 +12,15 @@ const formatCurrency = (amount: number) => {
   }).format(amount);
 };
 
+// Date formatter
+const formatDate = (date: Date): string => {
+  return date.toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
 // Category icons using the same style as your transaction component
 const getCategoryIcon = (category: string) => {
   const icons: Record<string, React.ReactNode> = {
@@ -146,10 +155,50 @@ const ProgressBar = ({ percentage }: { percentage: number }) => (
   </div>
 );
 
+// Date Input Component
+const DateInput = ({
+  id,
+  label,
+  value,
+  onChange,
+  max
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (date: string) => void;
+  max?: string;
+}) => (
+  <div className="flex flex-col">
+    <label htmlFor={id} className="text-xs text-gray-500 mb-1">{label}</label>
+    <input
+      id={id}
+      type="date"
+      value={value}
+      max={max}
+      onChange={(e) => onChange(e.target.value)}
+      className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200"
+    />
+  </div>
+);
+
 export default function CategorySpendingAnalytics() {
   const { transactions, isLoading, error, refetch } = useTransactions();
-  const [periodFilter, setPeriodFilter] = useState<'weekly' | 'monthly' | 'quarterly' | 'yearly'>('monthly');
+  const [periodFilter, setPeriodFilter] = useState<'weekly' | 'monthly' | 'quarterly' | 'yearly' | 'custom'>('monthly');
   const [isMobile, setIsMobile] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Initialize dates for custom range
+  const [startDate, setStartDate] = useState(() => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date.toISOString().split('T')[0];
+  });
+  
+  const [endDate, setEndDate] = useState(today);
   
   // Check if viewport is mobile
   useEffect(() => {
@@ -165,33 +214,61 @@ export default function CategorySpendingAnalytics() {
   // Calculate date ranges based on the selected period
   const getDateRange = () => {
     const now = new Date();
-    const startDate = new Date();
+    const start = new Date();
+    let label = '';
     
     switch (periodFilter) {
       case 'weekly':
-        startDate.setDate(now.getDate() - 7);
-        return { start: startDate, end: now, label: 'Last 7 days' };
+        start.setDate(now.getDate() - 7);
+        label = 'Last 7 days';
+        break;
       case 'monthly':
-        startDate.setMonth(now.getMonth() - 1);
-        return { start: startDate, end: now, label: 'Last 30 days' };
+        start.setMonth(now.getMonth() - 1);
+        label = 'Last 30 days';
+        break;
       case 'quarterly':
-        startDate.setMonth(now.getMonth() - 3);
-        return { start: startDate, end: now, label: 'Last 3 months' };
+        start.setMonth(now.getMonth() - 3);
+        label = 'Last 3 months';
+        break;
       case 'yearly':
-        startDate.setFullYear(now.getFullYear() - 1);
-        return { start: startDate, end: now, label: 'Last 12 months' };
+        start.setFullYear(now.getFullYear() - 1);
+        label = 'Last 12 months';
+        break;
+      case 'custom':
+        const customStart = new Date(startDate);
+        const customEnd = new Date(endDate);
+        // Format the display label
+        label = `${formatDate(customStart)} - ${formatDate(customEnd)}`;
+        return { start: customStart, end: customEnd, label };
       default:
-        startDate.setMonth(now.getMonth() - 1);
-        return { start: startDate, end: now, label: 'Last 30 days' };
+        start.setMonth(now.getMonth() - 1);
+        label = 'Last 30 days';
     }
+    
+    return { start, end: now, label };
+  };
+  
+  // Toggle custom date picker
+  const toggleDatePicker = () => {
+    if (!showDatePicker) {
+      setPeriodFilter('custom');
+    }
+    setShowDatePicker(!showDatePicker);
+  };
+  
+  // Apply custom filter
+  const applyCustomFilter = () => {
+    setPeriodFilter('custom');
+    setShowDatePicker(false);
   };
   
   // Filter transactions by date and type
   const filterTransactions = () => {
-    const { start } = getDateRange();
+    const { start, end } = getDateRange();
     return transactions.filter(transaction => {
       const transactionDate = transaction.Date ? new Date(transaction.Date) : null;
-      const isWithinDateRange = transactionDate ? transactionDate >= start : false;
+      const isWithinDateRange = transactionDate ? 
+        (transactionDate >= start && transactionDate <= end) : false;
       return isWithinDateRange && transaction.Type === 'Debit'; // Only expense transactions
     });
   };
@@ -231,7 +308,8 @@ export default function CategorySpendingAnalytics() {
     return {
       categories: sortedCategories,
       data: categorySpendings,
-      totalAmount
+      totalAmount,
+      transactionCount: filteredTransactions.length
     };
   };
 
@@ -247,9 +325,12 @@ export default function CategorySpendingAnalytics() {
       </div>
       
       {/* Time Period Filters */}
-      <div className="mb-6 flex space-x-2 overflow-x-auto">
+      <div className="mb-4 flex flex-wrap gap-2 overflow-x-auto">
         <button 
-          onClick={() => setPeriodFilter('weekly')}
+          onClick={() => {
+            setPeriodFilter('weekly');
+            setShowDatePicker(false);
+          }}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
             periodFilter === 'weekly' 
               ? 'bg-black text-white' 
@@ -259,7 +340,10 @@ export default function CategorySpendingAnalytics() {
           Weekly
         </button>
         <button 
-          onClick={() => setPeriodFilter('monthly')}
+          onClick={() => {
+            setPeriodFilter('monthly');
+            setShowDatePicker(false);
+          }}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
             periodFilter === 'monthly' 
               ? 'bg-black text-white' 
@@ -269,7 +353,10 @@ export default function CategorySpendingAnalytics() {
           Monthly
         </button>
         <button 
-          onClick={() => setPeriodFilter('quarterly')}
+          onClick={() => {
+            setPeriodFilter('quarterly');
+            setShowDatePicker(false);
+          }}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
             periodFilter === 'quarterly' 
               ? 'bg-black text-white' 
@@ -279,7 +366,10 @@ export default function CategorySpendingAnalytics() {
           Quarterly
         </button>
         <button 
-          onClick={() => setPeriodFilter('yearly')}
+          onClick={() => {
+            setPeriodFilter('yearly');
+            setShowDatePicker(false);
+          }}
           className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
             periodFilter === 'yearly' 
               ? 'bg-black text-white' 
@@ -288,7 +378,60 @@ export default function CategorySpendingAnalytics() {
         >
           Yearly
         </button>
+        <button 
+          onClick={toggleDatePicker}
+          className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium flex items-center ${
+            periodFilter === 'custom' 
+              ? 'bg-black text-white' 
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Custom Range
+        </button>
       </div>
+      
+      {/* Custom Date Range Picker */}
+      {showDatePicker && (
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="text-sm font-medium text-gray-700 mb-3">Select Date Range</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <DateInput
+              id="start-date"
+              label="Start Date"
+              value={startDate}
+              onChange={setStartDate}
+              max={endDate}
+            />
+            <DateInput
+              id="end-date"
+              label="End Date"
+              value={endDate}
+              onChange={setEndDate}
+              max={today}
+            />
+          </div>
+          <div className="flex justify-end space-x-2">
+            <button 
+              onClick={() => setShowDatePicker(false)}
+              className="rounded-lg border border-gray-200 px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button 
+              onClick={applyCustomFilter}
+              className="rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-gray-800"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* Spending Data */}
       {isLoading ? (
@@ -303,7 +446,9 @@ export default function CategorySpendingAnalytics() {
           <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="text-sm text-gray-500">Total Spending</div>
             <div className="text-2xl font-semibold text-gray-900 mt-1">{formatCurrency(spendingData.totalAmount)}</div>
-            <div className="text-xs text-gray-500 mt-1">across {spendingData.categories.length} categories</div>
+            <div className="text-xs text-gray-500 mt-1">
+              {spendingData.transactionCount} transactions across {spendingData.categories.length} categories
+            </div>
           </div>
           
           {/* Category Cards */}

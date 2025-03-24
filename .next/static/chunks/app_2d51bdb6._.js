@@ -3172,6 +3172,14 @@ const formatCurrency = (amount)=>{
         maximumFractionDigits: 0
     }).format(amount);
 };
+// Date formatter
+const formatDate = (date)=>{
+    return date.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    });
+};
 // Category icons using the same style as your transaction component
 const getCategoryIcon = (category)=>{
     const icons = {
@@ -3193,14 +3201,14 @@ const getCategoryIcon = (category)=>{
                         d: "M18 8h1a4 4 0 0 1 0 8h-1"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 21,
+                        lineNumber: 30,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                         d: "M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 22,
+                        lineNumber: 31,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3210,7 +3218,7 @@ const getCategoryIcon = (category)=>{
                         y2: "4"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 23,
+                        lineNumber: 32,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3220,7 +3228,7 @@ const getCategoryIcon = (category)=>{
                         y2: "4"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 24,
+                        lineNumber: 33,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3230,18 +3238,18 @@ const getCategoryIcon = (category)=>{
                         y2: "4"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 25,
+                        lineNumber: 34,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 20,
+                lineNumber: 29,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 19,
+            lineNumber: 28,
             columnNumber: 7
         }, this),
         'Shopping': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3262,7 +3270,7 @@ const getCategoryIcon = (category)=>{
                         d: "M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 32,
+                        lineNumber: 41,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3272,25 +3280,25 @@ const getCategoryIcon = (category)=>{
                         y2: "6"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 33,
+                        lineNumber: 42,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                         d: "M16 10a4 4 0 0 1-8 0"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 34,
+                        lineNumber: 43,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 31,
+                lineNumber: 40,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 30,
+            lineNumber: 39,
             columnNumber: 7
         }, this),
         'Transport': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3314,14 +3322,14 @@ const getCategoryIcon = (category)=>{
                         height: "13"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 41,
+                        lineNumber: 50,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("polygon", {
                         points: "16 8 20 8 23 11 23 16 16 16 16 8"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 42,
+                        lineNumber: 51,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -3330,7 +3338,7 @@ const getCategoryIcon = (category)=>{
                         r: "2.5"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 43,
+                        lineNumber: 52,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -3339,18 +3347,18 @@ const getCategoryIcon = (category)=>{
                         r: "2.5"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 44,
+                        lineNumber: 53,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 40,
+                lineNumber: 49,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 39,
+            lineNumber: 48,
             columnNumber: 7
         }, this),
         'Entertainment': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3376,7 +3384,7 @@ const getCategoryIcon = (category)=>{
                         ry: "2.18"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 51,
+                        lineNumber: 60,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3386,7 +3394,7 @@ const getCategoryIcon = (category)=>{
                         y2: "22"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 52,
+                        lineNumber: 61,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3396,7 +3404,7 @@ const getCategoryIcon = (category)=>{
                         y2: "22"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 53,
+                        lineNumber: 62,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3406,7 +3414,7 @@ const getCategoryIcon = (category)=>{
                         y2: "12"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 54,
+                        lineNumber: 63,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3416,7 +3424,7 @@ const getCategoryIcon = (category)=>{
                         y2: "7"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 55,
+                        lineNumber: 64,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3426,7 +3434,7 @@ const getCategoryIcon = (category)=>{
                         y2: "17"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 56,
+                        lineNumber: 65,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3436,7 +3444,7 @@ const getCategoryIcon = (category)=>{
                         y2: "17"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 57,
+                        lineNumber: 66,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3446,18 +3454,18 @@ const getCategoryIcon = (category)=>{
                         y2: "7"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 58,
+                        lineNumber: 67,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 50,
+                lineNumber: 59,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 49,
+            lineNumber: 58,
             columnNumber: 7
         }, this),
         'Healthcare': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3477,17 +3485,17 @@ const getCategoryIcon = (category)=>{
                     d: "M22 12h-4l-3 9L9 3l-3 9H2"
                 }, void 0, false, {
                     fileName: "[project]/app/components/Category.tsx",
-                    lineNumber: 65,
+                    lineNumber: 74,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 64,
+                lineNumber: 73,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 63,
+            lineNumber: 72,
             columnNumber: 7
         }, this),
         'default': /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3512,7 +3520,7 @@ const getCategoryIcon = (category)=>{
                         rx: "2"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 72,
+                        lineNumber: 81,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3522,18 +3530,18 @@ const getCategoryIcon = (category)=>{
                         y2: "10"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 73,
+                        lineNumber: 82,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 71,
+                lineNumber: 80,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 70,
+            lineNumber: 79,
             columnNumber: 7
         }, this)
     };
@@ -3559,7 +3567,7 @@ const SpendingCardsSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                 className: "h-10 w-10 rounded-full bg-gray-200"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 88,
+                                lineNumber: 97,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3568,32 +3576,32 @@ const SpendingCardsSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                     className: "h-4 w-24 bg-gray-200 rounded"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Category.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 99,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 89,
+                                lineNumber: 98,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 87,
+                        lineNumber: 96,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-5 w-32 bg-gray-200 rounded mb-2"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 93,
+                        lineNumber: 102,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-3 w-full bg-gray-200 rounded mb-3"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 94,
+                        lineNumber: 103,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3603,31 +3611,31 @@ const SpendingCardsSkeleton = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                 className: "h-3 w-20 bg-gray-200 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 96,
+                                lineNumber: 105,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-3 w-16 bg-gray-200 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 97,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 95,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this)
                 ]
             }, i, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 86,
+                lineNumber: 95,
                 columnNumber: 7
             }, this))
     }, void 0, false, {
         fileName: "[project]/app/components/Category.tsx",
-        lineNumber: 84,
+        lineNumber: 93,
         columnNumber: 3
     }, this);
 _c = SpendingCardsSkeleton;
@@ -3655,7 +3663,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             r: "10"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 109,
+                            lineNumber: 118,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3665,7 +3673,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "12"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 110,
+                            lineNumber: 119,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3675,18 +3683,18 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                             y2: "16"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 111,
+                            lineNumber: 120,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/Category.tsx",
-                    lineNumber: 108,
+                    lineNumber: 117,
                     columnNumber: 7
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 107,
+                lineNumber: 116,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -3694,7 +3702,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: "Failed to load spending data"
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 114,
+                lineNumber: 123,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3702,7 +3710,7 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: message
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 115,
+                lineNumber: 124,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3711,13 +3719,13 @@ const ErrorDisplay = ({ message, retry })=>/*#__PURE__*/ (0, __TURBOPACK__import
                 children: "Try Again"
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 116,
+                lineNumber: 125,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/Category.tsx",
-        lineNumber: 106,
+        lineNumber: 115,
         columnNumber: 3
     }, this);
 _c1 = ErrorDisplay;
@@ -3747,7 +3755,7 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                             rx: "2"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 130,
+                            lineNumber: 139,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -3757,18 +3765,18 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                             y2: "10"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 131,
+                            lineNumber: 140,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/Category.tsx",
-                    lineNumber: 129,
+                    lineNumber: 138,
                     columnNumber: 7
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 128,
+                lineNumber: 137,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -3776,7 +3784,7 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                 children: "No spending data yet"
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 134,
+                lineNumber: 143,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3784,13 +3792,13 @@ const EmptyState = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                 children: "Start logging your expenses to view insights by category."
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 135,
+                lineNumber: 144,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/Category.tsx",
-        lineNumber: 127,
+        lineNumber: 136,
         columnNumber: 3
     }, this);
 _c2 = EmptyState;
@@ -3804,20 +3812,64 @@ const ProgressBar = ({ percentage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__m
             }
         }, void 0, false, {
             fileName: "[project]/app/components/Category.tsx",
-            lineNumber: 142,
+            lineNumber: 151,
             columnNumber: 5
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/components/Category.tsx",
-        lineNumber: 141,
+        lineNumber: 150,
         columnNumber: 3
     }, this);
 _c3 = ProgressBar;
+// Date Input Component
+const DateInput = ({ id, label, value, onChange, max })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "flex flex-col",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                htmlFor: id,
+                className: "text-xs text-gray-500 mb-1",
+                children: label
+            }, void 0, false, {
+                fileName: "[project]/app/components/Category.tsx",
+                lineNumber: 173,
+                columnNumber: 5
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                id: id,
+                type: "date",
+                value: value,
+                max: max,
+                onChange: (e)=>onChange(e.target.value),
+                className: "rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            }, void 0, false, {
+                fileName: "[project]/app/components/Category.tsx",
+                lineNumber: 174,
+                columnNumber: 5
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/app/components/Category.tsx",
+        lineNumber: 172,
+        columnNumber: 3
+    }, this);
+_c4 = DateInput;
 function CategorySpendingAnalytics() {
     _s();
     const { transactions, isLoading, error, refetch } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTransactions"])();
     const [periodFilter, setPeriodFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('monthly');
     const [isMobile, setIsMobile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showDatePicker, setShowDatePicker] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+    // Initialize dates for custom range
+    const [startDate, setStartDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        "CategorySpendingAnalytics.useState": ()=>{
+            const date = new Date();
+            date.setMonth(date.getMonth() - 1);
+            return date.toISOString().split('T')[0];
+        }
+    }["CategorySpendingAnalytics.useState"]);
+    const [endDate, setEndDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(today);
     // Check if viewport is mobile
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CategorySpendingAnalytics.useEffect": ()=>{
@@ -3836,51 +3888,63 @@ function CategorySpendingAnalytics() {
     // Calculate date ranges based on the selected period
     const getDateRange = ()=>{
         const now = new Date();
-        const startDate = new Date();
+        const start = new Date();
+        let label = '';
         switch(periodFilter){
             case 'weekly':
-                startDate.setDate(now.getDate() - 7);
-                return {
-                    start: startDate,
-                    end: now,
-                    label: 'Last 7 days'
-                };
+                start.setDate(now.getDate() - 7);
+                label = 'Last 7 days';
+                break;
             case 'monthly':
-                startDate.setMonth(now.getMonth() - 1);
-                return {
-                    start: startDate,
-                    end: now,
-                    label: 'Last 30 days'
-                };
+                start.setMonth(now.getMonth() - 1);
+                label = 'Last 30 days';
+                break;
             case 'quarterly':
-                startDate.setMonth(now.getMonth() - 3);
-                return {
-                    start: startDate,
-                    end: now,
-                    label: 'Last 3 months'
-                };
+                start.setMonth(now.getMonth() - 3);
+                label = 'Last 3 months';
+                break;
             case 'yearly':
-                startDate.setFullYear(now.getFullYear() - 1);
+                start.setFullYear(now.getFullYear() - 1);
+                label = 'Last 12 months';
+                break;
+            case 'custom':
+                const customStart = new Date(startDate);
+                const customEnd = new Date(endDate);
+                // Format the display label
+                label = `${formatDate(customStart)} - ${formatDate(customEnd)}`;
                 return {
-                    start: startDate,
-                    end: now,
-                    label: 'Last 12 months'
+                    start: customStart,
+                    end: customEnd,
+                    label
                 };
             default:
-                startDate.setMonth(now.getMonth() - 1);
-                return {
-                    start: startDate,
-                    end: now,
-                    label: 'Last 30 days'
-                };
+                start.setMonth(now.getMonth() - 1);
+                label = 'Last 30 days';
         }
+        return {
+            start,
+            end: now,
+            label
+        };
+    };
+    // Toggle custom date picker
+    const toggleDatePicker = ()=>{
+        if (!showDatePicker) {
+            setPeriodFilter('custom');
+        }
+        setShowDatePicker(!showDatePicker);
+    };
+    // Apply custom filter
+    const applyCustomFilter = ()=>{
+        setPeriodFilter('custom');
+        setShowDatePicker(false);
     };
     // Filter transactions by date and type
     const filterTransactions = ()=>{
-        const { start } = getDateRange();
+        const { start, end } = getDateRange();
         return transactions.filter((transaction)=>{
             const transactionDate = transaction.Date ? new Date(transaction.Date) : null;
-            const isWithinDateRange = transactionDate ? transactionDate >= start : false;
+            const isWithinDateRange = transactionDate ? transactionDate >= start && transactionDate <= end : false;
             return isWithinDateRange && transaction.Type === 'Debit'; // Only expense transactions
         });
     };
@@ -3912,7 +3976,8 @@ function CategorySpendingAnalytics() {
         return {
             categories: sortedCategories,
             data: categorySpendings,
-            totalAmount
+            totalAmount,
+            transactionCount: filteredTransactions.length
         };
     };
     // Get spending data
@@ -3929,7 +3994,7 @@ function CategorySpendingAnalytics() {
                         children: "Category Spending"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 245,
+                        lineNumber: 323,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3937,74 +4002,232 @@ function CategorySpendingAnalytics() {
                         children: dateRange.label
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 246,
+                        lineNumber: 324,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 244,
+                lineNumber: 322,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mb-6 flex space-x-2 overflow-x-auto",
+                className: "mb-4 flex flex-wrap gap-2 overflow-x-auto",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setPeriodFilter('weekly'),
+                        onClick: ()=>{
+                            setPeriodFilter('weekly');
+                            setShowDatePicker(false);
+                        },
                         className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${periodFilter === 'weekly' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Weekly"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 251,
+                        lineNumber: 329,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setPeriodFilter('monthly'),
+                        onClick: ()=>{
+                            setPeriodFilter('monthly');
+                            setShowDatePicker(false);
+                        },
                         className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${periodFilter === 'monthly' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Monthly"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 261,
+                        lineNumber: 342,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setPeriodFilter('quarterly'),
+                        onClick: ()=>{
+                            setPeriodFilter('quarterly');
+                            setShowDatePicker(false);
+                        },
                         className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${periodFilter === 'quarterly' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Quarterly"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 271,
+                        lineNumber: 355,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setPeriodFilter('yearly'),
+                        onClick: ()=>{
+                            setPeriodFilter('yearly');
+                            setShowDatePicker(false);
+                        },
                         className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${periodFilter === 'yearly' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
                         children: "Yearly"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 281,
+                        lineNumber: 368,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: toggleDatePicker,
+                        className: `whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium flex items-center ${periodFilter === 'custom' ? 'bg-black text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "14",
+                                height: "14",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                strokeWidth: "2",
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round",
+                                className: "mr-1",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
+                                        x: "3",
+                                        y: "4",
+                                        width: "18",
+                                        height: "18",
+                                        rx: "2",
+                                        ry: "2"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/Category.tsx",
+                                        lineNumber: 390,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "16",
+                                        y1: "2",
+                                        x2: "16",
+                                        y2: "6"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/Category.tsx",
+                                        lineNumber: 391,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "8",
+                                        y1: "2",
+                                        x2: "8",
+                                        y2: "6"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/Category.tsx",
+                                        lineNumber: 392,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "3",
+                                        y1: "10",
+                                        x2: "21",
+                                        y2: "10"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/Category.tsx",
+                                        lineNumber: 393,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/components/Category.tsx",
+                                lineNumber: 389,
+                                columnNumber: 11
+                            }, this),
+                            "Custom Range"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/Category.tsx",
+                        lineNumber: 381,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 250,
+                lineNumber: 328,
                 columnNumber: 7
+            }, this),
+            showDatePicker && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-sm font-medium text-gray-700 mb-3",
+                        children: "Select Date Range"
+                    }, void 0, false, {
+                        fileName: "[project]/app/components/Category.tsx",
+                        lineNumber: 402,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DateInput, {
+                                id: "start-date",
+                                label: "Start Date",
+                                value: startDate,
+                                onChange: setStartDate,
+                                max: endDate
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/Category.tsx",
+                                lineNumber: 404,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DateInput, {
+                                id: "end-date",
+                                label: "End Date",
+                                value: endDate,
+                                onChange: setEndDate,
+                                max: today
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/Category.tsx",
+                                lineNumber: 411,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/Category.tsx",
+                        lineNumber: 403,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-end space-x-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setShowDatePicker(false),
+                                className: "rounded-lg border border-gray-200 px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-100",
+                                children: "Cancel"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/Category.tsx",
+                                lineNumber: 420,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: applyCustomFilter,
+                                className: "rounded-lg bg-black px-3 py-1 text-sm font-medium text-white hover:bg-gray-800",
+                                children: "Apply"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/Category.tsx",
+                                lineNumber: 426,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/components/Category.tsx",
+                        lineNumber: 419,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/components/Category.tsx",
+                lineNumber: 401,
+                columnNumber: 9
             }, this),
             isLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SpendingCardsSkeleton, {}, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 295,
+                lineNumber: 438,
                 columnNumber: 9
             }, this) : error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ErrorDisplay, {
                 message: error,
                 retry: refetch
             }, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 297,
+                lineNumber: 440,
                 columnNumber: 9
             }, this) : spendingData && spendingData.categories.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EmptyState, {}, void 0, false, {
                 fileName: "[project]/app/components/Category.tsx",
-                lineNumber: 299,
+                lineNumber: 442,
                 columnNumber: 9
             }, this) : spendingData && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                 children: [
@@ -4016,7 +4239,7 @@ function CategorySpendingAnalytics() {
                                 children: "Total Spending"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 304,
+                                lineNumber: 447,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4024,25 +4247,26 @@ function CategorySpendingAnalytics() {
                                 children: formatCurrency(spendingData.totalAmount)
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 305,
+                                lineNumber: 448,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "text-xs text-gray-500 mt-1",
                                 children: [
-                                    "across ",
+                                    spendingData.transactionCount,
+                                    " transactions across ",
                                     spendingData.categories.length,
                                     " categories"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 306,
+                                lineNumber: 449,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 303,
+                        lineNumber: 446,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4061,18 +4285,18 @@ function CategorySpendingAnalytics() {
                                                     children: category
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/Category.tsx",
-                                                    lineNumber: 316,
+                                                    lineNumber: 461,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Category.tsx",
-                                                lineNumber: 315,
+                                                lineNumber: 460,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Category.tsx",
-                                        lineNumber: 313,
+                                        lineNumber: 458,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4080,14 +4304,14 @@ function CategorySpendingAnalytics() {
                                         children: formatCurrency(spendingData.data[category].amount)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Category.tsx",
-                                        lineNumber: 320,
+                                        lineNumber: 465,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProgressBar, {
                                         percentage: spendingData.data[category].percentage
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Category.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 469,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4100,7 +4324,7 @@ function CategorySpendingAnalytics() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Category.tsx",
-                                                lineNumber: 327,
+                                                lineNumber: 472,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4110,24 +4334,24 @@ function CategorySpendingAnalytics() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Category.tsx",
-                                                lineNumber: 328,
+                                                lineNumber: 473,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Category.tsx",
-                                        lineNumber: 326,
+                                        lineNumber: 471,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, category, true, {
                                 fileName: "[project]/app/components/Category.tsx",
-                                lineNumber: 312,
+                                lineNumber: 457,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 310,
+                        lineNumber: 455,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4137,12 +4361,12 @@ function CategorySpendingAnalytics() {
                             children: "View Detailed Analysis"
                         }, void 0, false, {
                             fileName: "[project]/app/components/Category.tsx",
-                            lineNumber: 336,
+                            lineNumber: 481,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/Category.tsx",
-                        lineNumber: 335,
+                        lineNumber: 480,
                         columnNumber: 11
                     }, this)
                 ]
@@ -4150,22 +4374,23 @@ function CategorySpendingAnalytics() {
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/Category.tsx",
-        lineNumber: 243,
+        lineNumber: 321,
         columnNumber: 5
     }, this);
 }
-_s(CategorySpendingAnalytics, "0/cZycOAgew66xyOviqXY3VwEW8=", false, function() {
+_s(CategorySpendingAnalytics, "s/RZFD4zsliHcNfsaQSjr6xTMOo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$getTransaction$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTransactions"]
     ];
 });
-_c4 = CategorySpendingAnalytics;
-var _c, _c1, _c2, _c3, _c4;
+_c5 = CategorySpendingAnalytics;
+var _c, _c1, _c2, _c3, _c4, _c5;
 __turbopack_context__.k.register(_c, "SpendingCardsSkeleton");
 __turbopack_context__.k.register(_c1, "ErrorDisplay");
 __turbopack_context__.k.register(_c2, "EmptyState");
 __turbopack_context__.k.register(_c3, "ProgressBar");
-__turbopack_context__.k.register(_c4, "CategorySpendingAnalytics");
+__turbopack_context__.k.register(_c4, "DateInput");
+__turbopack_context__.k.register(_c5, "CategorySpendingAnalytics");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }
